@@ -1,7 +1,7 @@
-import { trimWordSpacing } from './util';
+import { trimWordSpacing, matchDefaultImport } from './util';
 
 export default function parseImport(originText) {
-    return importRegex.exec(originText)
+    return importRegex.exec(originText);
 }
 
 const importRegex = /(?:import[\s]+)([\s\S]*)(?:from[\s]+['|"](\w+)['|"](?:\s*;){0,1})/g;
@@ -13,9 +13,9 @@ const importBracketRegex = /\{(.*)\}/;
 export function getImportByRegex(originText, comments) {
     let res = null;
     const importList = [];
-    while ((res = Interpreter.importRegex.exec(text)) != null) {
+    while ((res = importRegex.exec(originText)) != null) { // eslint-disable-line
         let defaultImport = null;
-        let bracketImport = [];
+        const bracketImport = [];
         let error = 0;
         const importPath = res[2];
         const importBody = trimWordSpacing(res[1]);
@@ -29,14 +29,28 @@ export function getImportByRegex(originText, comments) {
                 .split(',')
                 .filter(s => s !== '')
             );
-            if (importBracketMatch.index === 0) {
-                defaultImport = importBody.slice(importBracketMatch[0].length, importBody.length).replace(/\s/g, '').split(',')[1];
-            } else if (importBracketMatch.index + importBracketMatch[0].length === importBody.length) {
-                defaultImport = importBody.slice(0, importBracketMatch.index).replace(/\s/g, '').split(',')[0];
+            // test the defaultimport is match the es6 import rule
+            defaultImport = importBody.replace(new RegExp(importBracketMatch[0]), ' ').trim();
+            const l = defaultImport.length;
+            if (defaultImport === '') {
+                defaultImport = null;
+            } else if (defaultImport[0] === ',' && matchDefaultImport(defaultImport.slice(1).trim())) {
+                defaultImport = defaultImport.slice(1).trim();
+            } else if (defaultImport[l - 1] === ',' && matchDefaultImport(defaultImport.slice(0, l - 1).trim())) {
+                defaultImport = defaultImport.slice(0, l - 1).trim();
             } else {
-                // give up import statement mistake
                 error = 1;
             }
         }
+        importList.push({
+            defaultImport,
+            bracketImport,
+            importPath,
+            start: res.index,
+            end: res.index + res[0].length,
+            error,
+        });
     }
+    return importList;
 }
+
