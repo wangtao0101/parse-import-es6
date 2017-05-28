@@ -43,21 +43,21 @@ export function getImportByRegex(originText) {
                 error = 1;
             }
         }
-        if (error === 1) {
-            importList.push({
-                importPath,
-                start: res.index,
-                end: res.index + res[0].length,
-                raw: res[0],
-                error,
-            });
-        } else {
+        if (error === 0) {
             importList.push({
                 defaultImport,
                 bracketImport,
                 importPath,
                 start: res.index,
                 // TODO:  change start end to range style
+                end: res.index + res[0].length,
+                raw: res[0],
+                error,
+            });
+        } else {
+            importList.push({
+                importPath,
+                start: res.index,
                 end: res.index + res[0].length,
                 raw: res[0],
                 error,
