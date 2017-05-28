@@ -10,7 +10,7 @@ const importBracketRegex = /\{(.*)\}/;
  * return all imports
  * @param {*string} strippedText text without comments
  */
-export function getImportByRegex(originText, comments) {
+export function getImportByRegex(originText) {
     let res = null;
     const importList = [];
     while ((res = importRegex.exec(originText)) != null) { // eslint-disable-line
@@ -27,6 +27,7 @@ export function getImportByRegex(originText, comments) {
         } else {
             bracketImport.push(...importBracketMatch[1]
                 .split(',')
+                .map(s => s.trim())
                 .filter(s => s !== '')
             );
             // test the defaultimport is match the es6 import rule
@@ -42,14 +43,26 @@ export function getImportByRegex(originText, comments) {
                 error = 1;
             }
         }
-        importList.push({
-            defaultImport,
-            bracketImport,
-            importPath,
-            start: res.index,
-            end: res.index + res[0].length,
-            error,
-        });
+        if (error === 1) {
+            importList.push({
+                importPath,
+                start: res.index,
+                end: res.index + res[0].length,
+                raw: res[0],
+                error,
+            });
+        } else {
+            importList.push({
+                defaultImport,
+                bracketImport,
+                importPath,
+                start: res.index,
+                // TODO:  change start end to range style
+                end: res.index + res[0].length,
+                raw: res[0],
+                error,
+            });
+        }
     }
     return importList;
 }
