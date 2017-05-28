@@ -92,6 +92,19 @@ describe('test getImportByRegex', () => {
         }]);
     });
 
+    test('get import correctly like * as a', () => {
+        const p = "import * as a, { c as d, f } from 'aa';";
+        expect(getImportByRegex(p)).toEqual([{
+            defaultImport: '* as a',
+            bracketImport: ['c as d', 'f'],
+            importPath: 'aa',
+            start: 0,
+            end: 39,
+            raw: "import * as a, { c as d, f } from 'aa';",
+            error: 0,
+        }]);
+    });
+
     test('get error import if default import is error', () => {
         const p = "import a b, { c as d, f } from 'aa';";
         expect(getImportByRegex(p)).toEqual([{
@@ -100,6 +113,27 @@ describe('test getImportByRegex', () => {
             end: 36,
             raw: "import a b, { c as d, f } from 'aa';",
             error: 1,
+        }]);
+    });
+
+    test('get multiple import correct', () => {
+        const p = "import a, { c as d, f } from 'aa';\r\nimport e, { g } from 'g'";
+        expect(getImportByRegex(p)).toEqual([{
+            defaultImport: 'a',
+            bracketImport: ['c as d', 'f'],
+            importPath: 'aa',
+            start: 0,
+            end: 34,
+            raw: "import a, { c as d, f } from 'aa';",
+            error: 0,
+        }, {
+            defaultImport: 'e',
+            bracketImport: ['g'],
+            importPath: 'g',
+            start: 36,
+            end: 60,
+            raw: "import e, { g } from 'g'",
+            error: 0,
         }]);
     });
 });

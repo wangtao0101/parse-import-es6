@@ -4,7 +4,7 @@ export default function parseImport(originText) {
     return importRegex.exec(originText);
 }
 
-const importRegex = /(?:import[\s]+)([\s\S]*)(?:from[\s]+['|"](\w+)['|"](?:\s*;){0,1})/g;
+const importRegex = /(?:import[\s]+)([\s\S]*?)(?:from[\s]+['|"](\w+)['|"](?:\s*;){0,1})/g;
 const importBracketRegex = /\{(.*)\}/;
 /**
  * return all imports
