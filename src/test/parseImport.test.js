@@ -53,6 +53,19 @@ describe('test getImportByRegex', () => {
         }]);
     });
 
+    test('get import correctly if named import endwith ,', () => {
+        const p = "import b, { a, c, } from 'aa'";
+        expect(getImportByRegex(p)).toEqual([{
+            defaultImport: 'b',
+            bracketImport: ['a', 'c'],
+            importPath: 'aa',
+            start: 0,
+            end: 29,
+            raw: "import b, { a, c, } from 'aa'",
+            error: 0,
+        }]);
+    });
+
     test('get import correctly if exist line feed', () => {
         const p = "import b\r, { \r\na \r\n, c} \n from 'aa';";
         expect(getImportByRegex(p)).toEqual([{

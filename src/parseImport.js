@@ -7,7 +7,8 @@ export default function parseImport(originText) {
 const importRegex = /(?:import[\s]+)([\s\S]*?)(?:from[\s]+['|"](\w+)['|"](?:\s*;){0,1})/g;
 const importBracketRegex = /\{(.*)\}/;
 /**
- * return all imports
+ * return all imports tol
+ * https://tc39.github.io/ecma262/#prod-ImportDeclaration
  * @param {*string} strippedText text without comments
  */
 export function getImportByRegex(originText) {
@@ -66,4 +67,3 @@ export function getImportByRegex(originText) {
     }
     return importList;
 }
-
