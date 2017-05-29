@@ -1,4 +1,4 @@
-import { trimWordSpacing, getAllLineStart } from '../util';
+import { trimWordSpacing, getAllLineStart, mapLocToRange } from '../util';
 
 describe('trimWordSpacing correct', () => {
     test('trimWordSpacing multiple blank', () => {
@@ -29,5 +29,40 @@ describe('getAllLineStart', () => {
     test('getAllLineStart correct mix', () => {
         const p = 'aa\rbbb\nccc\r\nd';
         expect(getAllLineStart(p)).toEqual([0, 3, 7, 12]);
+    });
+});
+
+function makeRange(lineS, columnS, lineE, columnE) {
+    return {
+        start: {
+            line: lineS,
+            column: columnS,
+        },
+        end: {
+            line: lineE,
+            column: columnE,
+        },
+    };
+}
+
+describe('mapLocToRange', () => {
+    test('mapLocToRange correct multiple line', () => {
+        const l = [0, 3, 7, 12];
+        expect(mapLocToRange(l, 2, 5)).toEqual(makeRange(0, 2, 1, 2));
+    });
+
+    test('mapLocToRange correct single line', () => {
+        const l = [0, 3, 7, 12];
+        expect(mapLocToRange(l, 4, 5)).toEqual(makeRange(1, 1, 1, 2));
+    });
+
+    test('mapLocToRange correct when multiple line and end in last line ', () => {
+        const l = [0, 3, 7, 12];
+        expect(mapLocToRange(l, 8, 15)).toEqual(makeRange(2, 1, 3, 3));
+    });
+
+    test('mapLocToRange correct when single line and end in last line ', () => {
+        const l = [0, 3, 7, 12];
+        expect(mapLocToRange(l, 14, 15)).toEqual(makeRange(3, 2, 3, 3));
     });
 });
