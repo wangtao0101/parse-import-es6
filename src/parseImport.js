@@ -7,10 +7,10 @@ export default function parseImport(originText) {
 
 const importRegex = /(?:import[\s]+)([\s\S]*?)(?:from[\s]+['|"](\w+)['|"](?:\s*;){0,1})/g;
 /**
- * return all imports tol
+ * return all import statements
  * @param {*string} strippedText text without comments
  */
-export function getImportByRegex(originText) {
+export function getAllImport(originText) {
     let res = null;
     const importList = [];
     while ((res = importRegex.exec(originText)) != null) { // eslint-disable-line
@@ -30,27 +30,17 @@ export function getImportByRegex(originText) {
             error = 1;
         }
 
-        if (error === 0) {
-            importList.push({
-                importedDefaultBinding,
-                nameSpaceImport,
-                namedImports,
-                moduleSpecifier,
-                start: res.index,
-                // TODO:  change start end to range style
-                end: res.index + res[0].length,
-                raw: res[0],
-                error,
-            });
-        } else {
-            importList.push({
-                moduleSpecifier,
-                start: res.index,
-                end: res.index + res[0].length,
-                raw: res[0],
-                error,
-            });
-        }
+        importList.push({
+            importedDefaultBinding,
+            nameSpaceImport,
+            namedImports,
+            moduleSpecifier,
+            start: res.index,
+            // TODO:  change start end to range style
+            end: res.index + res[0].length,
+            raw: res[0],
+            error,
+        });
     }
     return importList;
 }

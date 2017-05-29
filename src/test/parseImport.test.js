@@ -1,9 +1,9 @@
-import { getImportByRegex } from '../parseImport';
+import { getAllImport } from '../parseImport';
 
-describe('test getImportByRegex', () => {
+describe('test getAllImport', () => {
     test('get importedDefaultBinding correctly', () => {
         const p = "import a from 'aa'";
-        expect(getImportByRegex(p)).toEqual([{
+        expect(getAllImport(p)).toEqual([{
             importedDefaultBinding: 'a',
             nameSpaceImport: null,
             namedImports: [],
@@ -17,7 +17,7 @@ describe('test getImportByRegex', () => {
 
     test('get namedImports correctly', () => {
         const p = "import { a } from 'aa'";
-        expect(getImportByRegex(p)).toEqual([{
+        expect(getAllImport(p)).toEqual([{
             importedDefaultBinding: null,
             nameSpaceImport: null,
             namedImports: ['a'],
@@ -31,7 +31,7 @@ describe('test getImportByRegex', () => {
 
     test('get namedImports and importedDefaultBinding correctly', () => {
         const p = "import b, { a } from 'aa'";
-        expect(getImportByRegex(p)).toEqual([{
+        expect(getAllImport(p)).toEqual([{
             importedDefaultBinding: 'b',
             nameSpaceImport: null,
             namedImports: ['a'],
@@ -45,7 +45,7 @@ describe('test getImportByRegex', () => {
 
     test('get import correctly if named import is empty', () => {
         const p = "import b, { \r\n} from 'aa'";
-        expect(getImportByRegex(p)).toEqual([{
+        expect(getAllImport(p)).toEqual([{
             importedDefaultBinding: 'b',
             nameSpaceImport: null,
             namedImports: [],
@@ -59,7 +59,7 @@ describe('test getImportByRegex', () => {
 
     test('get import correctly if named import endwith ,', () => {
         const p = "import b, { a, c, } from 'aa'";
-        expect(getImportByRegex(p)).toEqual([{
+        expect(getAllImport(p)).toEqual([{
             importedDefaultBinding: 'b',
             nameSpaceImport: null,
             namedImports: ['a', 'c'],
@@ -73,7 +73,7 @@ describe('test getImportByRegex', () => {
 
     test('get import correctly if exist line feed', () => {
         const p = "import b\r, { \r\na \r\n, c} \n from 'aa';";
-        expect(getImportByRegex(p)).toEqual([{
+        expect(getAllImport(p)).toEqual([{
             importedDefaultBinding: 'b',
             nameSpaceImport: null,
             namedImports: ['a', 'c'],
@@ -87,7 +87,7 @@ describe('test getImportByRegex', () => {
 
     test('get nameSpaceImport correctly', () => {
         const p = "import * as a from 'aa';";
-        expect(getImportByRegex(p)).toEqual([{
+        expect(getAllImport(p)).toEqual([{
             importedDefaultBinding: null,
             nameSpaceImport: '* as a',
             namedImports: [],
@@ -101,7 +101,10 @@ describe('test getImportByRegex', () => {
 
     test('should get error', () => {
         const p = "import a b, { c as d, f } from 'aa';";
-        expect(getImportByRegex(p)).toEqual([{
+        expect(getAllImport(p)).toEqual([{
+            importedDefaultBinding: null,
+            nameSpaceImport: null,
+            namedImports: null,
             moduleSpecifier: 'aa',
             start: 0,
             end: 36,
@@ -112,7 +115,7 @@ describe('test getImportByRegex', () => {
 
     test('get multiple import correct', () => {
         const p = "import a, { c as d, f } from 'aa';\r\nimport e, { g } from 'g'";
-        expect(getImportByRegex(p)).toEqual([{
+        expect(getAllImport(p)).toEqual([{
             importedDefaultBinding: 'a',
             nameSpaceImport: null,
             namedImports: ['c as d', 'f'],
