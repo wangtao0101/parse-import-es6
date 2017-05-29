@@ -6,4 +6,4 @@ const p = "import * as c, { a, c } from 'b'";
 
 // console.log(parseImport(p));
 
-getImportByRegex(p);
+console.log(getImportByRegex(p));

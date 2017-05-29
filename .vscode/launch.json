@@ -8,10 +8,10 @@
             "type": "node",
             "request": "launch",
             "name": "启动程序",
-            "program": "${workspaceRoot}\\src\\index.js",
+            "program": "${workspaceRoot}/src/index.js",
             "sourceMaps": true, //sourcemap打开
             "outFiles": [
-                "${workspaceRoot}\\dist\\**\\*.js"
+                "${workspaceRoot}/dist/**/*.js"
             ], //源映射，指定实际执行文件
             "preLaunchTask": "build" //首先执行build task
         },
