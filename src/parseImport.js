@@ -1,9 +1,6 @@
+import strip from 'parse-comment-es6';
 import parseImportClause from './parseImportClause';
 import { trimWordSpacing, getAllLineStart, mapLocToRange } from './util';
-
-export default function parseImport(originText) {
-    return importRegex.exec(originText);
-}
 
 const importRegex = /(?:import[\s]+)([\s\S]*?)(?:from[\s]+['|"](\w+)['|"](?:\s*;){0,1})/g;
 /**
@@ -44,4 +41,27 @@ export function getAllImport(originText) {
         });
     }
     return importList;
+}
+
+function mapCommentsToImport(imp, comments = []) {
+    comments.forEach((comment) => {
+        if (comment.type === 'LineComment') {
+            //
+        }
+    });
+    return imp;
+}
+
+export default function parseImport(originText) {
+    const imports = getAllImport(originText);
+    const comments = strip(originText).comments;
+
+    const pickedImports = [];
+    imports.forEach((imp) => {
+        const res = mapCommentsToImport(imp, comments);
+        if (res != null) {
+            pickedImports.push(res);
+        }
+    });
+    return pickedImports;
 }
