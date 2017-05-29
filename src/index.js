@@ -1,9 +1,9 @@
-import parseImport, { getImportByRegex } from './parseImport';
+import parseImport, { getImportByRegex, parseImportClause } from './parseImport';
 
 export default parseImport;
 
-const p = "import * as c, { a, c } from 'b'";
+const p = 'aa, * as b';
 
 // console.log(parseImport(p));
 
-console.log(getImportByRegex(p));
+console.log(parseImportClause(p));
