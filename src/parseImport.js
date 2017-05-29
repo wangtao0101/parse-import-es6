@@ -1,5 +1,5 @@
 import parseImportClause from './parseImportClause';
-import { trimWordSpacing } from './util';
+import { trimWordSpacing, getAllLineStart, mapLocToRange } from './util';
 
 export default function parseImport(originText) {
     return importRegex.exec(originText);
@@ -13,6 +13,7 @@ const importRegex = /(?:import[\s]+)([\s\S]*?)(?:from[\s]+['|"](\w+)['|"](?:\s*;
 export function getAllImport(originText) {
     let res = null;
     const importList = [];
+    const lineStart = getAllLineStart(originText);
     while ((res = importRegex.exec(originText)) != null) { // eslint-disable-line
         let importedDefaultBinding = null;
         let nameSpaceImport = null;
@@ -36,8 +37,8 @@ export function getAllImport(originText) {
             namedImports,
             moduleSpecifier,
             start: res.index,
-            // TODO:  change start end to range style
             end: res.index + res[0].length,
+            range: mapLocToRange(lineStart, res.index, res.index + res[0].length),
             raw: res[0],
             error,
         });
