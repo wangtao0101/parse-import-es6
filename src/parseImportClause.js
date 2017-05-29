@@ -24,29 +24,29 @@ const ni = '\\{(.*)\\}';
  */
 export default function parseImportClause(importClause) {
     const regexp = new RegExp(`(?:^${idb}\\s*,\\s*${nsi}$)|(?:^${idb}\\s*,\\s*${ni}$)|^${idb}$|^${nsi}$|^${ni}$`);
-    let ImportedDefaultBinding = null;
-    let NameSpaceImport = null;
-    let NamedImports = [];
+    let importedDefaultBinding = null;
+    let nameSpaceImport = null;
+    let namedImports = [];
     const res = importClause.match(regexp);
     if (res == null) {
         return null;
     }
     if (res[1]) {
-        ImportedDefaultBinding = res[1];
-        NameSpaceImport = res[2];
+        importedDefaultBinding = res[1];
+        nameSpaceImport = res[2];
     } else if (res[3]) {
-        ImportedDefaultBinding = res[3];
-        NamedImports = splitImportsList(res[4]);
+        importedDefaultBinding = res[3];
+        namedImports = splitImportsList(res[4]);
     } else if (res[5]) {
-        ImportedDefaultBinding = res[5];
+        importedDefaultBinding = res[5];
     } else if (res[6]) {
-        NameSpaceImport = res[6];
+        nameSpaceImport = res[6];
     } else {
-        NamedImports = splitImportsList(res[7]);
+        namedImports = splitImportsList(res[7]);
     }
     return {
-        ImportedDefaultBinding,
-        NameSpaceImport,
-        NamedImports,
+        importedDefaultBinding,
+        nameSpaceImport,
+        namedImports,
     };
 }

@@ -1,10 +1,10 @@
 import parseImportClause from '../parseImportClause';
 
-function makeRetrun(ImportedDefaultBinding, NameSpaceImport, NamedImports) {
+function makeRetrun(importedDefaultBinding, nameSpaceImport, namedImports) {
     return {
-        ImportedDefaultBinding,
-        NameSpaceImport,
-        NamedImports,
+        importedDefaultBinding,
+        nameSpaceImport,
+        namedImports,
     };
 }
 

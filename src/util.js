@@ -1,8 +1,3 @@
-export function trimWordSpacing(text = '') {
+export function trimWordSpacing(text = '') { // eslint-disable-line
     return text.trim().replace(/[\s]/g, ' ').replace(/\s+/g, ' ');
-}
-
-const defaultImportRegex = /(^\w*$)|(^\*\s+as\s+\w+$)|(^\w+\s+as\s+\w+$)/;
-export function matchDefaultImport(text) {
-    return defaultImportRegex.test(text);
 }
