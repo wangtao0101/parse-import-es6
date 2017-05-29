@@ -13,7 +13,7 @@ export function getAllLineStart(text = '') {
         if (text[position] === '\r' || text[position] === '\n') {
             if (text[position] === '\r' && text[position + 1] === '\n') {
                 position += 2;
-                if (position  < text.length) {
+                if (position < text.length) {
                     lineStart.push(position);
                 }
             } else {
