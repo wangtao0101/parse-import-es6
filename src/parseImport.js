@@ -44,9 +44,9 @@ export function getAllImport(originText) {
 }
 
 function mapCommentsToImport(imp, comments = []) {
-    comments.forEach((comment) => {
+    comments.forEach((comment, index) => {
         if (comment.type === 'LineComment') {
-            //
+            // TODO:backforward for close comment
         }
     });
     return imp;
