@@ -1,2 +1,2 @@
-# parse-import-es6
-a new fast import parse without dependence like babylon, support deal with comments
+# parse-import-es6 (beta)
+a new fast import parse without dependence like babylon, tolerate error, support deal with comments
