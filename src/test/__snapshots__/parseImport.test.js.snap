@@ -556,7 +556,26 @@ Array [
       "start": 48,
     },
     "raw": "import a, { b, c as d } from 'aa';",
-    "trailingComments": Array [],
+    "trailingComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 34,
+            "line": 3,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 3,
+          },
+        },
+        "range": Object {
+          "end": 117,
+          "start": 95,
+        },
+        "raw": "// i am a comment, two",
+        "type": "LineComment",
+      },
+    ],
   },
 ]
 `;
