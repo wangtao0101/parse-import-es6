@@ -24,8 +24,9 @@ export function getAllLineStart(text = '') {
                 position += 1;
                 lineStart.push(position);
             }
+        } else {
+            position += 1;
         }
-        position += 1;
     }
     return lineStart;
 }

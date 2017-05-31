@@ -30,6 +30,16 @@ describe('getAllLineStart', () => {
         const p = 'aa\rbbb\nccc\r\nd';
         expect(getAllLineStart(p)).toEqual([0, 3, 7, 12]);
     });
+
+    test('getAllLineStart continuely \n correct', () => {
+        const p = 'aa\n\n\na';
+        expect(getAllLineStart(p)).toEqual([0, 3, 4, 5]);
+    });
+
+    test('getAllLineStart continuely mix \n \r\n correct', () => {
+        const p = 'aa\r\n\n\r\n\na';
+        expect(getAllLineStart(p)).toEqual([0, 4, 5, 7, 8]);
+    });
 });
 
 function makeRange(lineS, columnS, lineE, columnE) {
