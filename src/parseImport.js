@@ -45,9 +45,18 @@ export function getAllImport(originText) {
 
 function mapCommentsToImport(imp, comments = []) {
     comments.forEach((comment, index) => {
-        if (comment.type === 'LineComment') {
-            // TODO:backforward for close comment
+        // if (comment.type === 'LineComment') {
+        //     // TODO:backforward for close comment
+        // }
+        /**
+         * find leading comment
+         */
+        if (comment) {
+            // if (comment.loc.end.line + 1 === imp. )
         }
+        /**
+         * find interweave comment
+         */
     });
     return imp;
 }
@@ -65,3 +74,13 @@ export default function parseImport(originText) {
     });
     return pickedImports;
 }
+
+
+// TODO: make line comment follow the last identifier
+// TODO: extract all blockcomment (in new line or not decided by the occupied lines if the comment)
+// TODO: backforward for the leading comment
+// TODO: forward for ther trailing comment
+// TODO: we make the comment end of the line if exist the block comment in the begining of the line,
+//       follow the 'import' word
+
+// exculde the first leading comment of the first import, if exist 'flow' 'Copyright' 'LICENSE'
