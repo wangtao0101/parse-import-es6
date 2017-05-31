@@ -1,0 +1,562 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`parseImport close comment will be treated as leading or trailing comment 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": null,
+    "leadComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 34,
+            "line": 1,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 1,
+          },
+        },
+        "range": Object {
+          "end": 35,
+          "start": 13,
+        },
+        "raw": "// i am a comment, one",
+        "type": "LineComment",
+      },
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 15,
+            "line": 4,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 2,
+          },
+        },
+        "range": Object {
+          "end": 102,
+          "start": 48,
+        },
+        "raw": "/**
+             * i am a comment, two
+             */",
+        "type": "BlockComment",
+      },
+    ],
+    "loc": Object {
+      "end": Object {
+        "column": 34,
+        "line": 5,
+      },
+      "start": Object {
+        "column": 12,
+        "line": 5,
+      },
+    },
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "a",
+    ],
+    "range": Object {
+      "end": 137,
+      "start": 115,
+    },
+    "raw": "import { a } from 'aa'",
+    "trailingComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 36,
+            "line": 6,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 6,
+          },
+        },
+        "range": Object {
+          "end": 174,
+          "start": 150,
+        },
+        "raw": "// i am a comment, three",
+        "type": "LineComment",
+      },
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 35,
+            "line": 7,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 7,
+          },
+        },
+        "range": Object {
+          "end": 210,
+          "start": 187,
+        },
+        "raw": "// i am a comment, four",
+        "type": "LineComment",
+      },
+    ],
+  },
+]
+`;
+
+exports[`parseImport filter commentted import 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": null,
+    "leadComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 34,
+            "line": 1,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 1,
+          },
+        },
+        "range": Object {
+          "end": 35,
+          "start": 13,
+        },
+        "raw": "// i am a comment, one",
+        "type": "LineComment",
+      },
+    ],
+    "loc": Object {
+      "end": Object {
+        "column": 34,
+        "line": 2,
+      },
+      "start": Object {
+        "column": 12,
+        "line": 2,
+      },
+    },
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "a",
+    ],
+    "range": Object {
+      "end": 70,
+      "start": 48,
+    },
+    "raw": "import { a } from 'aa'",
+    "trailingComments": Array [],
+  },
+]
+`;
+
+exports[`parseImport filter copyright 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": null,
+    "leadComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 34,
+            "line": 5,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 5,
+          },
+        },
+        "range": Object {
+          "end": 155,
+          "start": 133,
+        },
+        "raw": "// i am a comment, one",
+        "type": "LineComment",
+      },
+    ],
+    "loc": Object {
+      "end": Object {
+        "column": 34,
+        "line": 6,
+      },
+      "start": Object {
+        "column": 12,
+        "line": 6,
+      },
+    },
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "a",
+    ],
+    "range": Object {
+      "end": 190,
+      "start": 168,
+    },
+    "raw": "import { a } from 'aa'",
+    "trailingComments": Array [],
+  },
+]
+`;
+
+exports[`parseImport filter flow 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": null,
+    "leadComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 34,
+            "line": 2,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 2,
+          },
+        },
+        "range": Object {
+          "end": 55,
+          "start": 33,
+        },
+        "raw": "// i am a comment, one",
+        "type": "LineComment",
+      },
+    ],
+    "loc": Object {
+      "end": Object {
+        "column": 34,
+        "line": 3,
+      },
+      "start": Object {
+        "column": 12,
+        "line": 3,
+      },
+    },
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "a",
+    ],
+    "range": Object {
+      "end": 90,
+      "start": 68,
+    },
+    "raw": "import { a } from 'aa'",
+    "trailingComments": Array [],
+  },
+]
+`;
+
+exports[`parseImport parse multiple import correctly 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": null,
+    "leadComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 34,
+            "line": 1,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 1,
+          },
+        },
+        "range": Object {
+          "end": 35,
+          "start": 13,
+        },
+        "raw": "// i am a comment, one",
+        "type": "LineComment",
+      },
+    ],
+    "loc": Object {
+      "end": Object {
+        "column": 34,
+        "line": 2,
+      },
+      "start": Object {
+        "column": 12,
+        "line": 2,
+      },
+    },
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "a",
+    ],
+    "range": Object {
+      "end": 70,
+      "start": 48,
+    },
+    "raw": "import { a } from 'aa'",
+    "trailingComments": Array [],
+  },
+  Object {
+    "error": 0,
+    "importedDefaultBinding": null,
+    "leadComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 34,
+            "line": 4,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 4,
+          },
+        },
+        "range": Object {
+          "end": 106,
+          "start": 84,
+        },
+        "raw": "// i am a comment, two",
+        "type": "LineComment",
+      },
+    ],
+    "loc": Object {
+      "end": Object {
+        "column": 34,
+        "line": 5,
+      },
+      "start": Object {
+        "column": 12,
+        "line": 5,
+      },
+    },
+    "moduleSpecifier": "bb",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "b",
+    ],
+    "range": Object {
+      "end": 141,
+      "start": 119,
+    },
+    "raw": "import { b } from 'bb'",
+    "trailingComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 36,
+            "line": 6,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 6,
+          },
+        },
+        "range": Object {
+          "end": 178,
+          "start": 154,
+        },
+        "raw": "// i am a comment, three",
+        "type": "LineComment",
+      },
+    ],
+  },
+]
+`;
+
+exports[`parseImport parseImport complex import correctly 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": "a",
+    "leadComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 34,
+            "line": 1,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 1,
+          },
+        },
+        "range": Object {
+          "end": 35,
+          "start": 13,
+        },
+        "raw": "// i am a comment, one",
+        "type": "LineComment",
+      },
+    ],
+    "loc": Object {
+      "end": Object {
+        "column": 46,
+        "line": 2,
+      },
+      "start": Object {
+        "column": 12,
+        "line": 2,
+      },
+    },
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "b",
+      "c as d",
+    ],
+    "range": Object {
+      "end": 82,
+      "start": 48,
+    },
+    "raw": "import a, { b, c as d } from 'aa';",
+    "trailingComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 34,
+            "line": 3,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 3,
+          },
+        },
+        "range": Object {
+          "end": 117,
+          "start": 95,
+        },
+        "raw": "// i am a comment, two",
+        "type": "LineComment",
+      },
+    ],
+  },
+]
+`;
+
+exports[`parseImport parseImport correctly 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": null,
+    "leadComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 34,
+            "line": 1,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 1,
+          },
+        },
+        "range": Object {
+          "end": 35,
+          "start": 13,
+        },
+        "raw": "// i am a comment, one",
+        "type": "LineComment",
+      },
+    ],
+    "loc": Object {
+      "end": Object {
+        "column": 35,
+        "line": 2,
+      },
+      "start": Object {
+        "column": 12,
+        "line": 2,
+      },
+    },
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "a",
+    ],
+    "range": Object {
+      "end": 71,
+      "start": 48,
+    },
+    "raw": "import { a } from 'aa';",
+    "trailingComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 34,
+            "line": 3,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 3,
+          },
+        },
+        "range": Object {
+          "end": 106,
+          "start": 84,
+        },
+        "raw": "// i am a comment, two",
+        "type": "LineComment",
+      },
+    ],
+  },
+]
+`;
+
+exports[`parseImport parseImport parse last comment in end line correctly 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": "a",
+    "leadComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 34,
+            "line": 1,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 1,
+          },
+        },
+        "range": Object {
+          "end": 35,
+          "start": 13,
+        },
+        "raw": "// i am a comment, one",
+        "type": "LineComment",
+      },
+    ],
+    "loc": Object {
+      "end": Object {
+        "column": 46,
+        "line": 2,
+      },
+      "start": Object {
+        "column": 12,
+        "line": 2,
+      },
+    },
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "b",
+      "c as d",
+    ],
+    "range": Object {
+      "end": 82,
+      "start": 48,
+    },
+    "raw": "import a, { b, c as d } from 'aa';",
+    "trailingComments": Array [],
+  },
+]
+`;

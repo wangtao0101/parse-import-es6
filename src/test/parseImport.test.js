@@ -1,4 +1,4 @@
-import { getAllImport } from '../parseImport';
+import parseImport, { getAllImport } from '../parseImport';
 
 function makeLoc(lineS, columnS, lineE, columnE) {
     return {
@@ -177,5 +177,90 @@ describe('test getAllImport', () => {
             raw: "import e, { g } from 'g'",
             error: 0,
         }]);
+    });
+});
+
+
+describe('parseImport', () => {
+    test('parseImport correctly', () => {
+        const p = `
+            // i am a comment, one
+            import { a } from 'aa';
+            // i am a comment, two
+        `;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
+
+    test('close comment will be treated as leading or trailing comment', () => {
+        const p = `
+            // i am a comment, one
+            /**
+             * i am a comment, two
+             */
+            import { a } from 'aa'
+            // i am a comment, three
+            // i am a comment, four
+        `;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
+
+    test('filter flow', () => {
+        const p = `
+            //@flow
+            // i am a comment, one
+            import { a } from 'aa'
+        `;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
+
+    test('filter copyright', () => {
+        const p = `
+            /**
+             * Copyright 2017-present, wangtao0101.
+             * All rights reserved.
+             */
+            // i am a comment, one
+            import { a } from 'aa'
+        `;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
+
+    test('filter commentted import', () => {
+        const p = `
+            // i am a comment, one
+            import { a } from 'aa'
+
+            //import { b } from 'bb'
+        `;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
+
+    test('parse multiple import correctly', () => {
+        const p = `
+            // i am a comment, one
+            import { a } from 'aa'
+
+            // i am a comment, two
+            import { b } from 'bb'
+            // i am a comment, three
+        `;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
+
+    test('parseImport complex import correctly', () => {
+        const p = `
+            // i am a comment, one
+            import a, { b, c as d } from 'aa';
+            // i am a comment, two
+        `;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
+
+    test('parseImport parse last comment in end line correctly', () => {
+        const p = `
+            // i am a comment, one
+            import a, { b, c as d } from 'aa';
+            // i am a comment, two`;
+        expect(parseImport(p)).toMatchSnapshot();
     });
 });
