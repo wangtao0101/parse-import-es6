@@ -33,9 +33,11 @@ export function getAllImport(originText) {
             nameSpaceImport,
             namedImports,
             moduleSpecifier,
-            start: res.index,
-            end: res.index + res[0].length,
-            range: mapLocToRange(lineStart, res.index, res.index + res[0].length),
+            range: {
+                start: res.index,
+                end: res.index + res[0].length,
+            },
+            loc: mapLocToRange(lineStart, res.index, res.index + res[0].length),
             raw: res[0],
             error,
         });
