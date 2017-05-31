@@ -257,6 +257,76 @@ Array [
 ]
 `;
 
+exports[`parseImport parse leading comment in the same line correctly 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": "a",
+    "leadComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 34,
+            "line": 2,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 1,
+          },
+        },
+        "range": Object {
+          "end": 50,
+          "start": 13,
+        },
+        "raw": "/*
+            i am a comment, one */",
+        "type": "BlockComment",
+      },
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 56,
+            "line": 2,
+          },
+          "start": Object {
+            "column": 35,
+            "line": 2,
+          },
+        },
+        "range": Object {
+          "end": 72,
+          "start": 51,
+        },
+        "raw": "//i am a comment, two",
+        "type": "LineComment",
+      },
+    ],
+    "loc": Object {
+      "end": Object {
+        "column": 46,
+        "line": 3,
+      },
+      "start": Object {
+        "column": 12,
+        "line": 3,
+      },
+    },
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "b",
+      "c as d",
+    ],
+    "range": Object {
+      "end": 119,
+      "start": 85,
+    },
+    "raw": "import a, { b, c as d } from 'aa';",
+    "trailingComments": Array [],
+  },
+]
+`;
+
 exports[`parseImport parse multiple import correctly 1`] = `
 Array [
   Object {
@@ -364,6 +434,254 @@ Array [
           "start": 154,
         },
         "raw": "// i am a comment, three",
+        "type": "LineComment",
+      },
+    ],
+  },
+]
+`;
+
+exports[`parseImport parse multiple leading comments in the same line correctly 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": "a",
+    "leadComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 34,
+            "line": 3,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 3,
+          },
+        },
+        "range": Object {
+          "end": 72,
+          "start": 50,
+        },
+        "raw": "//i am a comment, four",
+        "type": "LineComment",
+      },
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 34,
+            "line": 5,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 4,
+          },
+        },
+        "range": Object {
+          "end": 122,
+          "start": 85,
+        },
+        "raw": "/*
+            i am a comment, one */",
+        "type": "BlockComment",
+      },
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 40,
+            "line": 5,
+          },
+          "start": Object {
+            "column": 35,
+            "line": 5,
+          },
+        },
+        "range": Object {
+          "end": 128,
+          "start": 123,
+        },
+        "raw": "/*a*/",
+        "type": "BlockComment",
+      },
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 46,
+            "line": 5,
+          },
+          "start": Object {
+            "column": 41,
+            "line": 5,
+          },
+        },
+        "range": Object {
+          "end": 134,
+          "start": 129,
+        },
+        "raw": "/*b*/",
+        "type": "BlockComment",
+      },
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 68,
+            "line": 5,
+          },
+          "start": Object {
+            "column": 47,
+            "line": 5,
+          },
+        },
+        "range": Object {
+          "end": 156,
+          "start": 135,
+        },
+        "raw": "//i am a comment, two",
+        "type": "LineComment",
+      },
+    ],
+    "loc": Object {
+      "end": Object {
+        "column": 46,
+        "line": 6,
+      },
+      "start": Object {
+        "column": 12,
+        "line": 6,
+      },
+    },
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "b",
+      "c as d",
+    ],
+    "range": Object {
+      "end": 203,
+      "start": 169,
+    },
+    "raw": "import a, { b, c as d } from 'aa';",
+    "trailingComments": Array [],
+  },
+]
+`;
+
+exports[`parseImport parse multiple trailing comments in the same line correctly 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": "a",
+    "leadComments": Array [],
+    "loc": Object {
+      "end": Object {
+        "column": 46,
+        "line": 1,
+      },
+      "start": Object {
+        "column": 12,
+        "line": 1,
+      },
+    },
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "b",
+      "c as d",
+    ],
+    "range": Object {
+      "end": 47,
+      "start": 13,
+    },
+    "raw": "import a, { b, c as d } from 'aa';",
+    "trailingComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 17,
+            "line": 2,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 2,
+          },
+        },
+        "range": Object {
+          "end": 65,
+          "start": 60,
+        },
+        "raw": "/*a*/",
+        "type": "BlockComment",
+      },
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 23,
+            "line": 2,
+          },
+          "start": Object {
+            "column": 18,
+            "line": 2,
+          },
+        },
+        "range": Object {
+          "end": 71,
+          "start": 66,
+        },
+        "raw": "/*b*/",
+        "type": "BlockComment",
+      },
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 15,
+            "line": 3,
+          },
+          "start": Object {
+            "column": 24,
+            "line": 2,
+          },
+        },
+        "range": Object {
+          "end": 90,
+          "start": 72,
+        },
+        "raw": "/*
+            c*/",
+        "type": "BlockComment",
+      },
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 37,
+            "line": 3,
+          },
+          "start": Object {
+            "column": 16,
+            "line": 3,
+          },
+        },
+        "range": Object {
+          "end": 112,
+          "start": 91,
+        },
+        "raw": "//i am a comment, one",
+        "type": "LineComment",
+      },
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 33,
+            "line": 4,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 4,
+          },
+        },
+        "range": Object {
+          "end": 146,
+          "start": 125,
+        },
+        "raw": "//i am a comment, two",
         "type": "LineComment",
       },
     ],

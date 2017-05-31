@@ -263,4 +263,37 @@ describe('parseImport', () => {
             // i am a comment, two`;
         expect(parseImport(p)).toMatchSnapshot();
     });
+
+    test('parse leading comment in the same line correctly', () => {
+        const p = `
+            /*
+            i am a comment, one */ //i am a comment, two
+            import a, { b, c as d } from 'aa';
+        `;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
+
+    test('parse multiple leading comments in the same line correctly', () => {
+        const p = `
+            //i am a comment, three
+
+            //i am a comment, four
+            /*
+            i am a comment, one */ /*a*/ /*b*/ //i am a comment, two
+            import a, { b, c as d } from 'aa';
+        `;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
+
+    test('parse multiple trailing comments in the same line correctly', () => {
+        const p = `
+            import a, { b, c as d } from 'aa';
+            /*a*/ /*b*/ /*
+            c*/ //i am a comment, one
+            //i am a comment, two
+
+            //i am a comment, three
+        `;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
 });

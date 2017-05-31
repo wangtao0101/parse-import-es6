@@ -61,9 +61,9 @@ function findLeadingComments(comments, index, first) {
         return leadComments;
     }
     let backIndex = index - 1;
-    while (backIndex >= 0
-        && comments[backIndex].loc.end.line + 1
-            === comments[backIndex + 1].loc.start.line) {
+    while (backIndex >= 0 &&
+        (comments[backIndex].loc.end.line + 1 === comments[backIndex + 1].loc.start.line
+            || comments[backIndex].loc.end.line === comments[backIndex + 1].loc.start.line)) {
         if (first && ignoreComment.test(comments[backIndex].raw)) {
             break;
         }
@@ -78,9 +78,9 @@ function findLeadingComments(comments, index, first) {
 function findTrailingComments(comments, index) {
     const trailingComments = [];
     let forwardIndex = index;
-    while (forwardIndex < comments.length - 1
-        && comments[forwardIndex].loc.end.line + 1
-            === comments[forwardIndex + 1].loc.start.line) {
+    while (forwardIndex < comments.length - 1 &&
+        (comments[forwardIndex].loc.end.line + 1 === comments[forwardIndex + 1].loc.start.line
+            || comments[forwardIndex].loc.end.line === comments[forwardIndex + 1].loc.start.line)) {
         forwardIndex += 1;
     }
     for (let ind = index; ind <= forwardIndex; ind += 1) {
@@ -90,8 +90,8 @@ function findTrailingComments(comments, index) {
 }
 
 export function mapCommentsToImport(imp, comments = [], first = false) {
-    const leadComments = [];
-    const trailingComments = [];
+    let leadComments = [];
+    let trailingComments = [];
     for (let index = 0; index < comments.length; index += 1) {
         // filter import in comment, TODO: filter all wapper statement like '/', '"', "`"
         const comment = comments[index];
@@ -99,10 +99,19 @@ export function mapCommentsToImport(imp, comments = [], first = false) {
             return null;
         }
         if (comment.loc.end.line + 1 === imp.loc.start.line) {
-            leadComments.push(...findLeadingComments(comments, index, first));
+            // look forward for the last match comment
+            while (index + 1 < comments.length
+                && comments[index + 1].loc.end.line + 1 === imp.loc.start.line) {
+                index += 1;
+            }
+            leadComments = findLeadingComments(comments, index, first);
         }
         if (comment.loc.start.line === imp.loc.end.line + 1) {
-            trailingComments.push(...findTrailingComments(comments, index));
+            trailingComments = findTrailingComments(comments, index);
+            // skip the trailingComments, there will make bug if multiple comments in same line
+            if (trailingComments.length !== 0) {
+                index += trailingComments.length - 1;
+            }
         }
         /**
          * find interweave comment
