@@ -55,13 +55,20 @@ export function getAllImport(originText) {
 // exculde the first leading comment of the first import, if exist 'flow' 'Copyright' 'LICENSE'
 const ignoreComment = /@flow|license|copyright/i;
 
-function findLeadingComments(comments, index, first) {
+/**
+ * return leading comment list
+ * @param {*list<comment>} comments
+ * @param {*} the last match leading comment of one import
+ * @param {*} beginIndex the potential begin of the comment index of the import
+ * @param {*} first whether first import
+ */
+function findLeadingComments(comments, index, beginIndex, first) {
     const leadComments = [];
     if (first && ignoreComment.test(comments[index].raw)) {
         return leadComments;
     }
     let backIndex = index - 1;
-    while (backIndex >= 0 &&
+    while (backIndex >= beginIndex &&
         (comments[backIndex].loc.end.line + 1 === comments[backIndex + 1].loc.start.line
             || comments[backIndex].loc.end.line === comments[backIndex + 1].loc.start.line)) {
         if (first && ignoreComment.test(comments[backIndex].raw)) {
@@ -75,7 +82,7 @@ function findLeadingComments(comments, index, first) {
     return leadComments;
 }
 
-function findTrailingComments(comments, index) {
+function findTrailingComments(comments, index, nextImp) {
     const trailingComments = [];
     let forwardIndex = index;
     while (forwardIndex < comments.length - 1 &&
@@ -85,29 +92,33 @@ function findTrailingComments(comments, index) {
     }
     for (let ind = index; ind <= forwardIndex; ind += 1) {
         trailingComments.push(comments[ind]);
+        /**
+         * check if the comment is next to the nextImp,
+         * if true, put these comments into leading comments of next imp
+         */
+        if (nextImp && comments[ind].loc.end.line + 1 >= nextImp.loc.start.line) {
+            return [];
+        }
     }
     return trailingComments;
 }
 
-export function mapCommentsToImport(imp, comments = [], first = false) {
+export function mapCommentsToImport(imp, beginIndex, comments = [], first = false, nextImp) {
     let leadComments = [];
     let trailingComments = [];
-    for (let index = 0; index < comments.length; index += 1) {
-        // filter import in comment, TODO: filter all wapper statement like '/', '"', "`"
+    let index;
+    for (index = beginIndex; index < comments.length; index += 1) {
         const comment = comments[index];
-        if (comment.range.start <= imp.range.start && comment.range.end >= imp.range.end) {
-            return null;
-        }
         if (comment.loc.end.line + 1 === imp.loc.start.line) {
             // look forward for the last match comment
             while (index + 1 < comments.length
                 && comments[index + 1].loc.end.line + 1 === imp.loc.start.line) {
                 index += 1;
             }
-            leadComments = findLeadingComments(comments, index, first);
+            leadComments = findLeadingComments(comments, index, beginIndex, first);
         }
         if (comment.loc.start.line === imp.loc.end.line + 1) {
-            trailingComments = findTrailingComments(comments, index);
+            trailingComments = findTrailingComments(comments, index, nextImp);
             // skip the trailingComments, there will make bug if multiple comments in same line
             if (trailingComments.length !== 0) {
                 index += trailingComments.length - 1;
@@ -116,11 +127,17 @@ export function mapCommentsToImport(imp, comments = [], first = false) {
         /**
          * find interweave comment
          */
+        if (comment.loc.start.line >= imp.loc.end.line + 1) {
+            break;
+        }
     }
-    return Object.assign({}, imp, {
-        leadComments,
-        trailingComments,
-    });
+    return [
+        Object.assign({}, imp, {
+            leadComments,
+            trailingComments,
+        }),
+        index,
+    ];
 }
 
 export default function parseImport(originText) {
@@ -128,10 +145,24 @@ export default function parseImport(originText) {
     const comments = strip(originText, { comment: true, range: true, loc: true, raw: true })
         .comments;
 
+    const filterCommentImports = imports.filter((imp) => {
+        // filter import in comment, TODO: filter all wapper statement like '/', '"', "`"
+        for (let index = 0; index < comments.length; index += 1) {
+            const comment = comments[index];
+            if (comment.range.start <= imp.range.start && comment.range.end >= imp.range.end) {
+                return false;
+            }
+        }
+        return true;
+    });
+
     const pickedImports = [];
-    imports.forEach((imp, index) => {
-        const res = mapCommentsToImport(imp, comments, index === 0);
+    let commentIndex = 0;
+    filterCommentImports.forEach((imp, index) => {
+        const [res, rIndex] = mapCommentsToImport(
+            imp, commentIndex, comments, index === 0, filterCommentImports[index + 1]);
         if (res != null) {
+            commentIndex = rIndex;
             pickedImports.push(res);
         }
     });

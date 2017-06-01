@@ -296,4 +296,15 @@ describe('parseImport', () => {
         `;
         expect(parseImport(p)).toMatchSnapshot();
     });
+
+    test('close comment is treated as leading comment correctly', () => {
+        const p = `
+            // i am a comment, one
+            import { a } from 'aa'
+            // i am a comment, two
+            import { b } from 'bb'
+            // i am a comment, three
+        `;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
 });
