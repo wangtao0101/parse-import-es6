@@ -109,7 +109,11 @@ export function mapCommentsToImport(imp, beginIndex, comments = [], first = fals
     let index;
     for (index = beginIndex; index < comments.length; index += 1) {
         const comment = comments[index];
-        if (comment.loc.end.line + 1 === imp.loc.start.line) {
+        if (comment.loc.end.line + 1 === imp.loc.start.line
+            // treat blockcomment before import(in same line) as leading comment
+            // e.g /*asdfasdf
+            //     asdf*/ import ...
+            || (comment.loc.end.line === imp.loc.start.line && comment.loc.start.line < imp.loc.start.line)) {
             // look forward for the last match comment
             while (index + 1 < comments.length
                 && comments[index + 1].loc.end.line + 1 === imp.loc.start.line) {
@@ -117,7 +121,11 @@ export function mapCommentsToImport(imp, beginIndex, comments = [], first = fals
             }
             leadComments = findLeadingComments(comments, index, beginIndex, first);
         }
-        if (comment.loc.start.line === imp.loc.end.line + 1) {
+        if (comment.loc.start.line === imp.loc.end.line + 1
+            // treat blockcomment after import(in same line) as trailing comment
+            // e.g import ... /*asdfasdf
+            //     asdf*/
+            || (comment.loc.start.line === imp.loc.end.line && comment.loc.end.line > imp.loc.end.line)) {
             trailingComments = findTrailingComments(comments, index, nextImp);
             // skip the trailingComments, there will make bug if multiple comments in same line
             if (trailingComments.length !== 0) {

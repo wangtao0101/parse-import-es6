@@ -1011,3 +1011,141 @@ Array [
   },
 ]
 `;
+
+exports[`parseImport treat blockcomment after import(in same line) as trailing comment 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": null,
+    "leadComments": Array [],
+    "loc": Object {
+      "end": Object {
+        "column": 35,
+        "line": 1,
+      },
+      "start": Object {
+        "column": 12,
+        "line": 1,
+      },
+    },
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "a",
+    ],
+    "range": Object {
+      "end": 36,
+      "start": 13,
+    },
+    "raw": "import { a } from 'aa';",
+    "trailingComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 23,
+            "line": 2,
+          },
+          "start": Object {
+            "column": 36,
+            "line": 1,
+          },
+        },
+        "range": Object {
+          "end": 71,
+          "start": 37,
+        },
+        "raw": "/*asdfasdf
+            asdfasdf */",
+        "type": "BlockComment",
+      },
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 26,
+            "line": 3,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 3,
+          },
+        },
+        "range": Object {
+          "end": 98,
+          "start": 84,
+        },
+        "raw": "//asdfasdfasdf",
+        "type": "LineComment",
+      },
+    ],
+  },
+]
+`;
+
+exports[`parseImport treat blockcomment before import(in same line) as leading comment 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": null,
+    "leadComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 22,
+            "line": 1,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 1,
+          },
+        },
+        "range": Object {
+          "end": 23,
+          "start": 13,
+        },
+        "raw": "//asdfasdf",
+        "type": "LineComment",
+      },
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 22,
+            "line": 3,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 2,
+          },
+        },
+        "range": Object {
+          "end": 69,
+          "start": 36,
+        },
+        "raw": "/*asdfasdf
+            asdfasdf*/",
+        "type": "BlockComment",
+      },
+    ],
+    "loc": Object {
+      "end": Object {
+        "column": 45,
+        "line": 3,
+      },
+      "start": Object {
+        "column": 22,
+        "line": 3,
+      },
+    },
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "a",
+    ],
+    "range": Object {
+      "end": 92,
+      "start": 69,
+    },
+    "raw": "import { a } from 'aa';",
+    "trailingComments": Array [],
+  },
+]
+`;

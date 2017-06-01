@@ -307,4 +307,24 @@ describe('parseImport', () => {
         `;
         expect(parseImport(p)).toMatchSnapshot();
     });
+
+    test('treat blockcomment before import(in same line) as leading comment', () => {
+        const p = `
+            //asdfasdf
+            /*asdfasdf
+            asdfasdf*/import { a } from 'aa';
+        `;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
+
+    test('treat blockcomment after import(in same line) as trailing comment', () => {
+        const p = `
+            import { a } from 'aa'; /*asdfasdf
+            asdfasdf */
+            //asdfasdfasdf
+        `;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
 });
+
+
