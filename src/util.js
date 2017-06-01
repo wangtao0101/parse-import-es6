@@ -62,3 +62,28 @@ export function mapLocToRange(lineStart, startPosition, endPosition) {
         end,
     };
 }
+
+/**
+ * replace all comment in text and do no change feedline and range of import statement's location
+ * @param {*string} originText
+ * @param {*comments} comments
+ */
+export function replaceComment(originText, comments) {
+    let text = originText;
+    comments.forEach((comment) => {
+        const startText = text.slice(0, comment.range.start);
+        const endText = text.slice(comment.range.end);
+        if (comment.type === 'LineComment') {
+            const middle = ' '.repeat(comment.range.end - comment.range.start);
+            text = startText.concat(middle, endText);
+        } else {
+            const middle = ' '
+                .repeat(
+                    comment.range.end - comment.range.start - (comment.loc.end.line - comment.loc.start.line)
+                )
+                .concat('\n'.repeat(comment.loc.end.line - comment.loc.start.line));
+            text = startText.concat(middle, endText);
+        }
+    });
+    return text;
+}

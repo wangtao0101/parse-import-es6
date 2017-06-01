@@ -1,4 +1,5 @@
-import { trimWordSpacing, getAllLineStart, mapLocToRange } from '../util';
+import strip from 'parse-comment-es6';
+import { trimWordSpacing, getAllLineStart, mapLocToRange, replaceComment } from '../util';
 
 describe('trimWordSpacing correct', () => {
     test('trimWordSpacing multiple blank', () => {
@@ -74,5 +75,13 @@ describe('mapLocToRange', () => {
     test('mapLocToRange correct when single line and end in last line ', () => {
         const l = [0, 3, 7, 12];
         expect(mapLocToRange(l, 14, 15)).toEqual(makeRange(3, 2, 3, 3));
+    });
+});
+
+describe('replaceComment', () => {
+    test.only('replaceComment correctly', () => {
+        const p = "import a/*a\na*///a\nfrom 'aa'";
+        const comments = strip(p, { comment: true, range: true, loc: true, raw: true }).comments;
+        expect(replaceComment(p, comments)).toEqual("import a      \n   \nfrom 'aa'");
     });
 });
