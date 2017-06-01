@@ -49,7 +49,7 @@ function findPosition(line, lineStart, position) {
 }
 
 /**
- * map location style to range style in text
+ * map range style to location style in text
  * @param {*list} lineStart
  * @param {*number} startPosition
  * @param {*number} endPosition
