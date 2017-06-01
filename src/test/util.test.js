@@ -79,7 +79,7 @@ describe('mapLocToRange', () => {
 });
 
 describe('replaceComment', () => {
-    test.only('replaceComment correctly', () => {
+    test('replaceComment correctly', () => {
         const p = "import a/*a\na*///a\nfrom 'aa'";
         const comments = strip(p, { comment: true, range: true, loc: true, raw: true }).comments;
         expect(replaceComment(p, comments)).toEqual("import a      \n   \nfrom 'aa'");

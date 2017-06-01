@@ -1,4 +1,6 @@
+import strip from 'parse-comment-es6';
 import parseImport, { getAllImport } from '../parseImport';
+import { replaceComment } from '../util';
 
 function makeLoc(lineS, columnS, lineE, columnE) {
     return {
@@ -178,6 +180,26 @@ describe('test getAllImport', () => {
             error: 0,
         }]);
     });
+
+    test('get commented import correctly', () => {
+        const p = "import a /*a\na*/ from 'aa'";
+        const comments = strip(p, { comment: true, range: true, loc: true, raw: true })
+        .comments;
+        const imports = getAllImport(replaceComment(p, comments), p);
+        expect(imports).toEqual([{
+            importedDefaultBinding: 'a',
+            nameSpaceImport: null,
+            namedImports: [],
+            moduleSpecifier: 'aa',
+            range: {
+                start: 0,
+                end: 26,
+            },
+            loc: makeLoc(0, 0, 1, 13),
+            raw: "import a /*a\na*/ from 'aa'",
+            error: 0,
+        }]);
+    });
 });
 
 
@@ -326,5 +348,4 @@ describe('parseImport', () => {
         expect(parseImport(p)).toMatchSnapshot();
     });
 });
-
 

@@ -1,6 +1,6 @@
 import strip from 'parse-comment-es6';
 import parseImportClause from './parseImportClause';
-import { trimWordSpacing, getAllLineStart, mapLocToRange } from './util';
+import { trimWordSpacing, getAllLineStart, mapLocToRange, replaceComment } from './util';
 
 // TODO: make line comment follow the last identifier
 // TODO: extract all blockcomment (in new line or not decided by the occupied lines if the comment)
@@ -14,11 +14,15 @@ const importRegex = /(?:import[\s]+)([\s\S]*?)(?:from[\s]+['|"](\w+)['|"](?:\s*;
  * return all import statements
  * @param {*string} strippedText text without comments
  */
-export function getAllImport(originText) {
+export function getAllImport(replaceText, originText) {
+    if (originText == null) {
+        originText = replaceText; // eslint-disable-line
+    }
     let res = null;
     const importList = [];
+    // here we must use not replaced text to calculate linestart
     const lineStart = getAllLineStart(originText);
-    while ((res = importRegex.exec(originText)) != null) { // eslint-disable-line
+    while ((res = importRegex.exec(replaceText)) != null) { // eslint-disable-line
         let importedDefaultBinding = null;
         let nameSpaceImport = null;
         let namedImports = null;
@@ -45,7 +49,7 @@ export function getAllImport(originText) {
                 end: res.index + res[0].length,
             },
             loc: mapLocToRange(lineStart, res.index, res.index + res[0].length),
-            raw: res[0],
+            raw: originText.substring(res.index, res.index + res[0].length),
             error,
         });
     }
@@ -149,9 +153,9 @@ export function mapCommentsToImport(imp, beginIndex, comments = [], first = fals
 }
 
 export default function parseImport(originText) {
-    const imports = getAllImport(originText);
     const comments = strip(originText, { comment: true, range: true, loc: true, raw: true })
         .comments;
+    const imports = getAllImport(replaceComment(originText, comments), originText);
 
     const filterCommentImports = imports.filter((imp) => {
         // filter import in comment, TODO: filter all wapper statement like '/', '"', "`"
