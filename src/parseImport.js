@@ -139,6 +139,8 @@ function mapCommentsToImport(imp, beginIndex, comments = [], first = false, next
         /**
          * find interweave comment
          */
+
+        // (comment.loc.start.line == imp.loc.end.line + 1) must have been processed before
         if (comment.loc.start.line >= imp.loc.end.line + 1) {
             break;
         }
