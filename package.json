@@ -1,6 +1,6 @@
 {
   "name": "parse-import-es6",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "parse-import-es6",
   "main": "dist/index.js",
   "repository": {
@@ -23,8 +23,9 @@
     "buildlib": "cross-env NODE_ENV=production babel src -d dist --ignore src/test",
     "test": "jest",
     "coverage": "jest --coverage",
+    "clean": "rimraf dist/*",
     "lint": "eslint ./src",
-    "prepublish": "npm run buildlib"
+    "prepublish": "npm run clean && npm run buildlib"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -39,7 +40,8 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^5.0.3",
     "eslint-plugin-react": "^7.0.1",
-    "jest": "^20.0.0"
+    "jest": "^20.0.0",
+    "rimraf": "^2.6.1"
   },
   "dependencies": {
     "parse-comment-es6": "^0.5.1"
