@@ -107,9 +107,127 @@ function findTrailingComments(comments, index, nextImp) {
     return trailingComments;
 }
 
-function mapCommentsToImport(imp, beginIndex, comments = [], first = false, nextImp) {
+function getIdentifierLoc(identifier, regexp, imp, replaceImpRaw, lineStart, type) {
+    const match = new RegExp(regexp).exec(replaceImpRaw);
+    const length = match[0].length - match[1].length;
+    const start = match.index + length + imp.range.start;
+    const end = start + match[2].length;
+    return {
+        identifier,
+        loc: mapLocToRange(lineStart, start, end),
+        range: {
+            start,
+            end,
+        },
+        type,
+    };
+}
+
+function getAllIdentifierLoc(imp, originText, replaceImpRaw) {
+    const identifierList = [];
+    const lineStart = getAllLineStart(originText);
+    identifierList.push(
+        getIdentifierLoc('import',
+            '^((import)[\\s,]+)',
+            imp, replaceImpRaw, lineStart, 'Import')
+    );
+    if (imp.importedDefaultBinding != null) {
+        identifierList.push(
+            getIdentifierLoc(imp.importedDefaultBinding,
+                `[\\s]+((${imp.importedDefaultBinding})[\\s,]+)`,
+                imp, replaceImpRaw, lineStart, 'ImportedDefaultBinding')
+        );
+    }
+    if (imp.nameSpaceImport != null) {
+        const alias = imp.nameSpaceImport.split(' as ')[1];
+        identifierList.push(
+            getIdentifierLoc(imp.nameSpaceImport,
+                `[\\s,]+((\\*\\s+as\\s+${alias})[\\s,]+)`,
+                imp, replaceImpRaw, lineStart, 'NameSpaceImport')
+        );
+    }
+    imp.namedImports.forEach((id) => {
+        const alias = id.split(' as ');
+        if (alias[1] == null) {
+            identifierList.push(
+                getIdentifierLoc(id,
+                    `[\\s,{]+((${id})[\\s,}]+)`,
+                    imp, replaceImpRaw, lineStart, 'NamedImports')
+            );
+        } else {
+            identifierList.push(
+                getIdentifierLoc(id,
+                    `[\\s,{}]+((${alias[0]}\\s+as\\s+${alias[1]})[\\s,}]+)`,
+                    imp, replaceImpRaw, lineStart, 'NamedImports')
+            );
+        }
+    });
+    identifierList.push(
+        getIdentifierLoc('from',
+            '[\\s]+((from)[\\s,]+)',
+            imp, replaceImpRaw, lineStart, 'From')
+    );
+    identifierList.push(
+        getIdentifierLoc(imp.moduleSpecifier,
+            `[\\s]+\\'((${imp.moduleSpecifier})\\')`,
+            imp, replaceImpRaw, lineStart, 'ModuleSpecifier')
+    );
+    return identifierList;
+}
+
+function mapCommentsToIdentifier(comments, imp, originText, replaceImpRaw) {
+    const identifierList = getAllIdentifierLoc(imp, originText, replaceImpRaw);
+    return comments.map((comment) => { // eslint-disable-line
+        for (let index = 0; index < identifierList.length; index += 1) {
+            const identifier = identifierList[index];
+            if (identifier.loc.end.line === comment.loc.start.line) {
+                /**
+                 * comment before identifier e.g.
+                 * /*i am a comment *\/ import a from 'aa';
+                 * Then, this comment belong to import identifier
+                 */
+                if (comment.range.end < identifier.range.start) {
+                    return Object.assign(comment, {
+                        identifier,
+                    });
+                }
+                /**
+                 * if there has same identifier in the same line,
+                 * if the comment is between the two ,then the comment belongs to first comment
+                 * e.g.
+                 * import a from 'aa'; /*asf*\/ import b from 'bb'; the comment belongs to first comment
+                 */
+                if (index + 1 < identifierList.length &&
+                    identifierList[index + 1].loc.end.line === comment.loc.start.line &&
+                    identifierList[index + 1].range.start < comment.range.start) {
+                    continue; // eslint-disable-line
+                    // next loop it maybe go to else branch
+                } else {
+                    return Object.assign(comment, {
+                        identifier: identifierList[index],
+                    });
+                }
+            }
+            /**
+             * comment can't find identifier in the same line
+             * e.g.
+             * import
+             * //i am a comment
+             * a from 'aa'
+             */
+            if (identifier.loc.start.line > comment.loc.end.line) {
+                return Object.assign(comment, {
+                    identifier: identifierList[index],
+                });
+            }
+        }
+    });
+}
+
+function mapCommentsToImport(imp, beginIndex, comments = [], first = false, nextImp, originText, replaceImpRaw) {
     let leadComments = [];
     let trailingComments = [];
+    let middleComments = [];
     let index;
     for (index = beginIndex; index < comments.length; index += 1) {
         const comment = comments[index];
@@ -137,18 +255,24 @@ function mapCommentsToImport(imp, beginIndex, comments = [], first = false, next
             }
         }
         /**
-         * find interweave comment
+         * find middle comment
          */
+        if (comment.loc.start.line >= imp.loc.start.line && comment.loc.end.line <= imp.loc.end.line) {
+            middleComments.push(comment);
+        }
 
         // (comment.loc.start.line == imp.loc.end.line + 1) must have been processed before
         if (comment.loc.start.line >= imp.loc.end.line + 1) {
             break;
         }
     }
+
+    middleComments = mapCommentsToIdentifier(middleComments, imp, originText, replaceImpRaw);
     return [
         Object.assign({}, imp, {
             leadComments,
             trailingComments,
+            middleComments,
         }),
         index,
     ];
@@ -157,7 +281,8 @@ function mapCommentsToImport(imp, beginIndex, comments = [], first = false, next
 export default function parseImport(originText) {
     const comments = strip(originText, { comment: true, range: true, loc: true, raw: true })
         .comments;
-    const imports = getAllImport(replaceComment(originText, comments), originText);
+    const replaceText = replaceComment(originText, comments);
+    const imports = getAllImport(replaceText, originText);
 
     // TODO: filter all wapper statement like '/', '"', "`", commented import statement has been removed
 
@@ -165,7 +290,13 @@ export default function parseImport(originText) {
     let commentIndex = 0;
     imports.forEach((imp, index) => {
         const [res, rIndex] = mapCommentsToImport(
-            imp, commentIndex, comments, index === 0, imports[index + 1]);
+            imp,
+            commentIndex,
+            comments, index === 0,
+            imports[index + 1],
+            originText,
+            replaceText.substring(imp.range.start, imp.range.end)
+        );
         if (res != null) {
             commentIndex = rIndex;
             pickedImports.push(res);

@@ -35,6 +35,7 @@ Array [
         "line": 2,
       },
     },
+    "middleComments": Array [],
     "moduleSpecifier": "aa",
     "nameSpaceImport": null,
     "namedImports": Array [
@@ -80,6 +81,7 @@ Array [
         "line": 4,
       },
     },
+    "middleComments": Array [],
     "moduleSpecifier": "bb",
     "nameSpaceImport": null,
     "namedImports": Array [
@@ -169,6 +171,7 @@ Array [
         "line": 5,
       },
     },
+    "middleComments": Array [],
     "moduleSpecifier": "aa",
     "nameSpaceImport": null,
     "namedImports": Array [
@@ -256,6 +259,7 @@ Array [
         "line": 2,
       },
     },
+    "middleComments": Array [],
     "moduleSpecifier": "aa",
     "nameSpaceImport": null,
     "namedImports": Array [
@@ -306,6 +310,7 @@ Array [
         "line": 6,
       },
     },
+    "middleComments": Array [],
     "moduleSpecifier": "aa",
     "nameSpaceImport": null,
     "namedImports": Array [
@@ -356,6 +361,7 @@ Array [
         "line": 3,
       },
     },
+    "middleComments": Array [],
     "moduleSpecifier": "aa",
     "nameSpaceImport": null,
     "namedImports": Array [
@@ -366,6 +372,1123 @@ Array [
       "start": 68,
     },
     "raw": "import { a } from 'aa'",
+    "trailingComments": Array [],
+  },
+]
+`;
+
+exports[`parseImport middlecomment parse all kinds of comment correctly 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": null,
+    "leadComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 16,
+            "line": 3,
+          },
+          "start": Object {
+            "column": 0,
+            "line": 3,
+          },
+        },
+        "range": Object {
+          "end": 24,
+          "start": 8,
+        },
+        "raw": "//i am a comment",
+        "type": "LineComment",
+      },
+    ],
+    "loc": Object {
+      "end": Object {
+        "column": 12,
+        "line": 7,
+      },
+      "start": Object {
+        "column": 0,
+        "line": 4,
+      },
+    },
+    "middleComments": Array [
+      Object {
+        "identifier": Object {
+          "identifier": "aa",
+          "loc": Object {
+            "end": Object {
+              "column": 6,
+              "line": 5,
+            },
+            "start": Object {
+              "column": 4,
+              "line": 5,
+            },
+          },
+          "range": Object {
+            "end": 40,
+            "start": 38,
+          },
+          "type": "NamedImports",
+        },
+        "loc": Object {
+          "end": Object {
+            "column": 17,
+            "line": 5,
+          },
+          "start": Object {
+            "column": 8,
+            "line": 5,
+          },
+        },
+        "range": Object {
+          "end": 51,
+          "start": 42,
+        },
+        "raw": "/*aaaaa*/",
+        "type": "BlockComment",
+      },
+      Object {
+        "identifier": Object {
+          "identifier": "bb",
+          "loc": Object {
+            "end": Object {
+              "column": 20,
+              "line": 5,
+            },
+            "start": Object {
+              "column": 18,
+              "line": 5,
+            },
+          },
+          "range": Object {
+            "end": 54,
+            "start": 52,
+          },
+          "type": "NamedImports",
+        },
+        "loc": Object {
+          "end": Object {
+            "column": 30,
+            "line": 5,
+          },
+          "start": Object {
+            "column": 22,
+            "line": 5,
+          },
+        },
+        "range": Object {
+          "end": 64,
+          "start": 56,
+        },
+        "raw": "//bbbbbb",
+        "type": "LineComment",
+      },
+      Object {
+        "identifier": Object {
+          "identifier": "cc as bb",
+          "loc": Object {
+            "end": Object {
+              "column": 12,
+              "line": 6,
+            },
+            "start": Object {
+              "column": 4,
+              "line": 6,
+            },
+          },
+          "range": Object {
+            "end": 77,
+            "start": 69,
+          },
+          "type": "NamedImports",
+        },
+        "loc": Object {
+          "end": Object {
+            "column": 21,
+            "line": 6,
+          },
+          "start": Object {
+            "column": 14,
+            "line": 6,
+          },
+        },
+        "range": Object {
+          "end": 86,
+          "start": 79,
+        },
+        "raw": "//ccccc",
+        "type": "LineComment",
+      },
+      Object {
+        "identifier": Object {
+          "identifier": "aa",
+          "loc": Object {
+            "end": Object {
+              "column": 10,
+              "line": 7,
+            },
+            "start": Object {
+              "column": 8,
+              "line": 7,
+            },
+          },
+          "range": Object {
+            "end": 97,
+            "start": 95,
+          },
+          "type": "ModuleSpecifier",
+        },
+        "loc": Object {
+          "end": Object {
+            "column": 20,
+            "line": 7,
+          },
+          "start": Object {
+            "column": 13,
+            "line": 7,
+          },
+        },
+        "range": Object {
+          "end": 107,
+          "start": 100,
+        },
+        "raw": "//ddddd",
+        "type": "LineComment",
+      },
+    ],
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "aa",
+      "bb",
+      "cc as bb",
+    ],
+    "range": Object {
+      "end": 99,
+      "start": 25,
+    },
+    "raw": "import {
+    aa, /*aaaaa*/ bb, //bbbbbb
+    cc as bb, //ccccc
+} from 'aa';",
+    "trailingComments": Array [],
+  },
+  Object {
+    "error": 0,
+    "importedDefaultBinding": null,
+    "leadComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 7,
+            "line": 8,
+          },
+          "start": Object {
+            "column": 0,
+            "line": 8,
+          },
+        },
+        "range": Object {
+          "end": 115,
+          "start": 108,
+        },
+        "raw": "//eeeee",
+        "type": "LineComment",
+      },
+    ],
+    "loc": Object {
+      "end": Object {
+        "column": 35,
+        "line": 9,
+      },
+      "start": Object {
+        "column": 0,
+        "line": 9,
+      },
+    },
+    "middleComments": Array [
+      Object {
+        "identifier": Object {
+          "identifier": "dd",
+          "loc": Object {
+            "end": Object {
+              "column": 33,
+              "line": 9,
+            },
+            "start": Object {
+              "column": 31,
+              "line": 9,
+            },
+          },
+          "range": Object {
+            "end": 149,
+            "start": 147,
+          },
+          "type": "ModuleSpecifier",
+        },
+        "loc": Object {
+          "end": Object {
+            "column": 43,
+            "line": 9,
+          },
+          "start": Object {
+            "column": 36,
+            "line": 9,
+          },
+        },
+        "range": Object {
+          "end": 159,
+          "start": 152,
+        },
+        "raw": "//fffff",
+        "type": "LineComment",
+      },
+    ],
+    "moduleSpecifier": "dd",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "aa",
+      "cc as bb",
+    ],
+    "range": Object {
+      "end": 151,
+      "start": 116,
+    },
+    "raw": "import { aa , cc as bb } from 'dd';",
+    "trailingComments": Array [],
+  },
+]
+`;
+
+exports[`parseImport middlecomment parse comment before default import correctly 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": "aa",
+    "leadComments": Array [],
+    "loc": Object {
+      "end": Object {
+        "column": 39,
+        "line": 2,
+      },
+      "start": Object {
+        "column": 0,
+        "line": 1,
+      },
+    },
+    "middleComments": Array [
+      Object {
+        "identifier": Object {
+          "identifier": "aa",
+          "loc": Object {
+            "end": Object {
+              "column": 14,
+              "line": 2,
+            },
+            "start": Object {
+              "column": 12,
+              "line": 2,
+            },
+          },
+          "range": Object {
+            "end": 22,
+            "start": 20,
+          },
+          "type": "ImportedDefaultBinding",
+        },
+        "loc": Object {
+          "end": Object {
+            "column": 11,
+            "line": 2,
+          },
+          "start": Object {
+            "column": 0,
+            "line": 2,
+          },
+        },
+        "range": Object {
+          "end": 19,
+          "start": 8,
+        },
+        "raw": "/*asdfasd*/",
+        "type": "BlockComment",
+      },
+    ],
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "cc as bb",
+    ],
+    "range": Object {
+      "end": 47,
+      "start": 1,
+    },
+    "raw": "import
+/*asdfasd*/ aa, { cc as bb } from 'aa';",
+    "trailingComments": Array [],
+  },
+]
+`;
+
+exports[`parseImport middlecomment parse comment before import correctly 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": null,
+    "leadComments": Array [],
+    "loc": Object {
+      "end": Object {
+        "column": 15,
+        "line": 5,
+      },
+      "start": Object {
+        "column": 10,
+        "line": 1,
+      },
+    },
+    "middleComments": Array [
+      Object {
+        "identifier": Object {
+          "identifier": "import",
+          "loc": Object {
+            "end": Object {
+              "column": 16,
+              "line": 1,
+            },
+            "start": Object {
+              "column": 10,
+              "line": 1,
+            },
+          },
+          "range": Object {
+            "end": 17,
+            "start": 11,
+          },
+          "type": "Import",
+        },
+        "loc": Object {
+          "end": Object {
+            "column": 9,
+            "line": 1,
+          },
+          "start": Object {
+            "column": 0,
+            "line": 1,
+          },
+        },
+        "range": Object {
+          "end": 10,
+          "start": 1,
+        },
+        "raw": "/*abcde*/",
+        "type": "BlockComment",
+      },
+    ],
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "aa",
+      "cc as bb",
+    ],
+    "range": Object {
+      "end": 46,
+      "start": 11,
+    },
+    "raw": "import {aa,cc
+
+ as
+
+ bb} from 'aa';",
+    "trailingComments": Array [],
+  },
+]
+`;
+
+exports[`parseImport middlecomment parse comment between identifier correctly 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": null,
+    "leadComments": Array [],
+    "loc": Object {
+      "end": Object {
+        "column": 12,
+        "line": 4,
+      },
+      "start": Object {
+        "column": 0,
+        "line": 1,
+      },
+    },
+    "middleComments": Array [
+      Object {
+        "identifier": Object {
+          "identifier": "aa",
+          "loc": Object {
+            "end": Object {
+              "column": 6,
+              "line": 2,
+            },
+            "start": Object {
+              "column": 4,
+              "line": 2,
+            },
+          },
+          "range": Object {
+            "end": 16,
+            "start": 14,
+          },
+          "type": "NamedImports",
+        },
+        "loc": Object {
+          "end": Object {
+            "column": 17,
+            "line": 2,
+          },
+          "start": Object {
+            "column": 8,
+            "line": 2,
+          },
+        },
+        "range": Object {
+          "end": 27,
+          "start": 18,
+        },
+        "raw": "/*aaaaa*/",
+        "type": "BlockComment",
+      },
+      Object {
+        "identifier": Object {
+          "identifier": "cc as bb",
+          "loc": Object {
+            "end": Object {
+              "column": 12,
+              "line": 3,
+            },
+            "start": Object {
+              "column": 4,
+              "line": 3,
+            },
+          },
+          "range": Object {
+            "end": 44,
+            "start": 36,
+          },
+          "type": "NamedImports",
+        },
+        "loc": Object {
+          "end": Object {
+            "column": 21,
+            "line": 3,
+          },
+          "start": Object {
+            "column": 14,
+            "line": 3,
+          },
+        },
+        "range": Object {
+          "end": 53,
+          "start": 46,
+        },
+        "raw": "//bbbbb",
+        "type": "LineComment",
+      },
+      Object {
+        "identifier": Object {
+          "identifier": "aa",
+          "loc": Object {
+            "end": Object {
+              "column": 10,
+              "line": 4,
+            },
+            "start": Object {
+              "column": 8,
+              "line": 4,
+            },
+          },
+          "range": Object {
+            "end": 64,
+            "start": 62,
+          },
+          "type": "ModuleSpecifier",
+        },
+        "loc": Object {
+          "end": Object {
+            "column": 20,
+            "line": 4,
+          },
+          "start": Object {
+            "column": 13,
+            "line": 4,
+          },
+        },
+        "range": Object {
+          "end": 74,
+          "start": 67,
+        },
+        "raw": "//ccccc",
+        "type": "LineComment",
+      },
+    ],
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "aa",
+      "bb",
+      "cc as bb",
+    ],
+    "range": Object {
+      "end": 66,
+      "start": 1,
+    },
+    "raw": "import {
+    aa, /*aaaaa*/ bb,
+    cc as bb, //bbbbb
+} from 'aa';",
+    "trailingComments": Array [],
+  },
+]
+`;
+
+exports[`parseImport middlecomment parse comment default import correctly 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": "dd",
+    "leadComments": Array [],
+    "loc": Object {
+      "end": Object {
+        "column": 12,
+        "line": 5,
+      },
+      "start": Object {
+        "column": 0,
+        "line": 1,
+      },
+    },
+    "middleComments": Array [
+      Object {
+        "identifier": Object {
+          "identifier": "dd",
+          "loc": Object {
+            "end": Object {
+              "column": 9,
+              "line": 1,
+            },
+            "start": Object {
+              "column": 7,
+              "line": 1,
+            },
+          },
+          "range": Object {
+            "end": 10,
+            "start": 8,
+          },
+          "type": "ImportedDefaultBinding",
+        },
+        "loc": Object {
+          "end": Object {
+            "column": 19,
+            "line": 1,
+          },
+          "start": Object {
+            "column": 11,
+            "line": 1,
+          },
+        },
+        "range": Object {
+          "end": 20,
+          "start": 12,
+        },
+        "raw": "//dddddd",
+        "type": "LineComment",
+      },
+      Object {
+        "identifier": Object {
+          "identifier": "aa",
+          "loc": Object {
+            "end": Object {
+              "column": 6,
+              "line": 3,
+            },
+            "start": Object {
+              "column": 4,
+              "line": 3,
+            },
+          },
+          "range": Object {
+            "end": 29,
+            "start": 27,
+          },
+          "type": "NamedImports",
+        },
+        "loc": Object {
+          "end": Object {
+            "column": 15,
+            "line": 3,
+          },
+          "start": Object {
+            "column": 8,
+            "line": 3,
+          },
+        },
+        "range": Object {
+          "end": 38,
+          "start": 31,
+        },
+        "raw": "//aaaaa",
+        "type": "LineComment",
+      },
+      Object {
+        "identifier": Object {
+          "identifier": "cc as bb",
+          "loc": Object {
+            "end": Object {
+              "column": 12,
+              "line": 4,
+            },
+            "start": Object {
+              "column": 4,
+              "line": 4,
+            },
+          },
+          "range": Object {
+            "end": 51,
+            "start": 43,
+          },
+          "type": "NamedImports",
+        },
+        "loc": Object {
+          "end": Object {
+            "column": 21,
+            "line": 4,
+          },
+          "start": Object {
+            "column": 14,
+            "line": 4,
+          },
+        },
+        "range": Object {
+          "end": 60,
+          "start": 53,
+        },
+        "raw": "//bbbbb",
+        "type": "LineComment",
+      },
+      Object {
+        "identifier": Object {
+          "identifier": "aa",
+          "loc": Object {
+            "end": Object {
+              "column": 10,
+              "line": 5,
+            },
+            "start": Object {
+              "column": 8,
+              "line": 5,
+            },
+          },
+          "range": Object {
+            "end": 71,
+            "start": 69,
+          },
+          "type": "ModuleSpecifier",
+        },
+        "loc": Object {
+          "end": Object {
+            "column": 20,
+            "line": 5,
+          },
+          "start": Object {
+            "column": 13,
+            "line": 5,
+          },
+        },
+        "range": Object {
+          "end": 81,
+          "start": 74,
+        },
+        "raw": "//ccccc",
+        "type": "LineComment",
+      },
+    ],
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "aa",
+      "cc as bb",
+    ],
+    "range": Object {
+      "end": 73,
+      "start": 1,
+    },
+    "raw": "import dd, //dddddd
+{
+    aa, //aaaaa
+    cc as bb, //bbbbb
+} from 'aa';",
+    "trailingComments": Array [],
+  },
+]
+`;
+
+exports[`parseImport middlecomment parse comment in every line end  correctly 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": null,
+    "leadComments": Array [],
+    "loc": Object {
+      "end": Object {
+        "column": 12,
+        "line": 4,
+      },
+      "start": Object {
+        "column": 0,
+        "line": 1,
+      },
+    },
+    "middleComments": Array [
+      Object {
+        "identifier": Object {
+          "identifier": "aa",
+          "loc": Object {
+            "end": Object {
+              "column": 6,
+              "line": 2,
+            },
+            "start": Object {
+              "column": 4,
+              "line": 2,
+            },
+          },
+          "range": Object {
+            "end": 16,
+            "start": 14,
+          },
+          "type": "NamedImports",
+        },
+        "loc": Object {
+          "end": Object {
+            "column": 15,
+            "line": 2,
+          },
+          "start": Object {
+            "column": 8,
+            "line": 2,
+          },
+        },
+        "range": Object {
+          "end": 25,
+          "start": 18,
+        },
+        "raw": "//aaaaa",
+        "type": "LineComment",
+      },
+      Object {
+        "identifier": Object {
+          "identifier": "cc as bb",
+          "loc": Object {
+            "end": Object {
+              "column": 12,
+              "line": 3,
+            },
+            "start": Object {
+              "column": 4,
+              "line": 3,
+            },
+          },
+          "range": Object {
+            "end": 38,
+            "start": 30,
+          },
+          "type": "NamedImports",
+        },
+        "loc": Object {
+          "end": Object {
+            "column": 21,
+            "line": 3,
+          },
+          "start": Object {
+            "column": 14,
+            "line": 3,
+          },
+        },
+        "range": Object {
+          "end": 47,
+          "start": 40,
+        },
+        "raw": "//bbbbb",
+        "type": "LineComment",
+      },
+      Object {
+        "identifier": Object {
+          "identifier": "aa",
+          "loc": Object {
+            "end": Object {
+              "column": 10,
+              "line": 4,
+            },
+            "start": Object {
+              "column": 8,
+              "line": 4,
+            },
+          },
+          "range": Object {
+            "end": 58,
+            "start": 56,
+          },
+          "type": "ModuleSpecifier",
+        },
+        "loc": Object {
+          "end": Object {
+            "column": 20,
+            "line": 4,
+          },
+          "start": Object {
+            "column": 13,
+            "line": 4,
+          },
+        },
+        "range": Object {
+          "end": 68,
+          "start": 61,
+        },
+        "raw": "//ccccc",
+        "type": "LineComment",
+      },
+    ],
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "aa",
+      "cc as bb",
+    ],
+    "range": Object {
+      "end": 60,
+      "start": 1,
+    },
+    "raw": "import {
+    aa, //aaaaa
+    cc as bb, //bbbbb
+} from 'aa';",
+    "trailingComments": Array [],
+  },
+]
+`;
+
+exports[`parseImport middlecomment parse nameSpaceimport import correctly 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": "dd",
+    "leadComments": Array [],
+    "loc": Object {
+      "end": Object {
+        "column": 10,
+        "line": 3,
+      },
+      "start": Object {
+        "column": 0,
+        "line": 1,
+      },
+    },
+    "middleComments": Array [
+      Object {
+        "identifier": Object {
+          "identifier": "dd",
+          "loc": Object {
+            "end": Object {
+              "column": 9,
+              "line": 1,
+            },
+            "start": Object {
+              "column": 7,
+              "line": 1,
+            },
+          },
+          "range": Object {
+            "end": 10,
+            "start": 8,
+          },
+          "type": "ImportedDefaultBinding",
+        },
+        "loc": Object {
+          "end": Object {
+            "column": 19,
+            "line": 1,
+          },
+          "start": Object {
+            "column": 11,
+            "line": 1,
+          },
+        },
+        "range": Object {
+          "end": 20,
+          "start": 12,
+        },
+        "raw": "//dddddd",
+        "type": "LineComment",
+      },
+      Object {
+        "identifier": Object {
+          "identifier": "* as bb",
+          "loc": Object {
+            "end": Object {
+              "column": 7,
+              "line": 2,
+            },
+            "start": Object {
+              "column": 0,
+              "line": 2,
+            },
+          },
+          "range": Object {
+            "end": 28,
+            "start": 21,
+          },
+          "type": "NameSpaceImport",
+        },
+        "loc": Object {
+          "end": Object {
+            "column": 16,
+            "line": 2,
+          },
+          "start": Object {
+            "column": 8,
+            "line": 2,
+          },
+        },
+        "range": Object {
+          "end": 37,
+          "start": 29,
+        },
+        "raw": "//eeeeee",
+        "type": "LineComment",
+      },
+      Object {
+        "identifier": Object {
+          "identifier": "aa",
+          "loc": Object {
+            "end": Object {
+              "column": 8,
+              "line": 3,
+            },
+            "start": Object {
+              "column": 6,
+              "line": 3,
+            },
+          },
+          "range": Object {
+            "end": 46,
+            "start": 44,
+          },
+          "type": "ModuleSpecifier",
+        },
+        "loc": Object {
+          "end": Object {
+            "column": 18,
+            "line": 3,
+          },
+          "start": Object {
+            "column": 11,
+            "line": 3,
+          },
+        },
+        "range": Object {
+          "end": 56,
+          "start": 49,
+        },
+        "raw": "//ccccc",
+        "type": "LineComment",
+      },
+    ],
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": "* as bb",
+    "namedImports": Array [],
+    "range": Object {
+      "end": 48,
+      "start": 1,
+    },
+    "raw": "import dd, //dddddd
+* as bb //eeeeee
+from 'aa';",
+    "trailingComments": Array [],
+  },
+]
+`;
+
+exports[`parseImport middlecomment parse single line comment import correctly 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": null,
+    "leadComments": Array [],
+    "loc": Object {
+      "end": Object {
+        "column": 15,
+        "line": 5,
+      },
+      "start": Object {
+        "column": 0,
+        "line": 1,
+      },
+    },
+    "middleComments": Array [
+      Object {
+        "identifier": Object {
+          "identifier": "aa",
+          "loc": Object {
+            "end": Object {
+              "column": 13,
+              "line": 5,
+            },
+            "start": Object {
+              "column": 11,
+              "line": 5,
+            },
+          },
+          "range": Object {
+            "end": 34,
+            "start": 32,
+          },
+          "type": "ModuleSpecifier",
+        },
+        "loc": Object {
+          "end": Object {
+            "column": 23,
+            "line": 5,
+          },
+          "start": Object {
+            "column": 16,
+            "line": 5,
+          },
+        },
+        "range": Object {
+          "end": 44,
+          "start": 37,
+        },
+        "raw": "//abcde",
+        "type": "LineComment",
+      },
+    ],
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "aa",
+      "cc as bb",
+    ],
+    "range": Object {
+      "end": 36,
+      "start": 1,
+    },
+    "raw": "import {aa,cc
+
+ as
+
+ bb} from 'aa';",
     "trailingComments": Array [],
   },
 ]
@@ -425,6 +1548,7 @@ Array [
         "line": 3,
       },
     },
+    "middleComments": Array [],
     "moduleSpecifier": "aa",
     "nameSpaceImport": null,
     "namedImports": Array [
@@ -476,6 +1600,7 @@ Array [
         "line": 2,
       },
     },
+    "middleComments": Array [],
     "moduleSpecifier": "aa",
     "nameSpaceImport": null,
     "namedImports": Array [
@@ -521,6 +1646,7 @@ Array [
         "line": 5,
       },
     },
+    "middleComments": Array [],
     "moduleSpecifier": "bb",
     "nameSpaceImport": null,
     "namedImports": Array [
@@ -663,6 +1789,7 @@ Array [
         "line": 6,
       },
     },
+    "middleComments": Array [],
     "moduleSpecifier": "aa",
     "nameSpaceImport": null,
     "namedImports": Array [
@@ -695,6 +1822,7 @@ Array [
         "line": 1,
       },
     },
+    "middleComments": Array [],
     "moduleSpecifier": "aa",
     "nameSpaceImport": null,
     "namedImports": Array [
@@ -838,6 +1966,7 @@ Array [
         "line": 2,
       },
     },
+    "middleComments": Array [],
     "moduleSpecifier": "aa",
     "nameSpaceImport": null,
     "namedImports": Array [
@@ -908,6 +2037,7 @@ Array [
         "line": 2,
       },
     },
+    "middleComments": Array [],
     "moduleSpecifier": "aa",
     "nameSpaceImport": null,
     "namedImports": Array [
@@ -977,6 +2107,7 @@ Array [
         "line": 2,
       },
     },
+    "middleComments": Array [],
     "moduleSpecifier": "aa",
     "nameSpaceImport": null,
     "namedImports": Array [
@@ -1028,6 +2159,7 @@ Array [
         "line": 1,
       },
     },
+    "middleComments": Array [],
     "moduleSpecifier": "aa",
     "nameSpaceImport": null,
     "namedImports": Array [
@@ -1135,6 +2267,7 @@ Array [
         "line": 3,
       },
     },
+    "middleComments": Array [],
     "moduleSpecifier": "aa",
     "nameSpaceImport": null,
     "namedImports": Array [

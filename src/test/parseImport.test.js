@@ -184,7 +184,7 @@ describe('test getAllImport', () => {
     test('get commented import correctly', () => {
         const p = "import a /*a\na*/ from 'aa'";
         const comments = strip(p, { comment: true, range: true, loc: true, raw: true })
-        .comments;
+            .comments;
         const imports = getAllImport(replaceComment(p, comments), p);
         expect(imports).toEqual([{
             importedDefaultBinding: 'a',
@@ -349,3 +349,74 @@ describe('parseImport', () => {
     });
 });
 
+describe.only('parseImport middlecomment', () => {
+    test('parse single line comment import correctly', () => {
+        const p = `
+import {aa,cc\n\n as\n\n bb} from 'aa'; //abcde`;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
+
+    test('parse comment before import correctly', () => {
+        const p = `
+/*abcde*/ import {aa,cc\n\n as\n\n bb} from 'aa';`;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
+
+    test('parse comment before default import correctly', () => {
+        const p = `
+import
+/*asdfasd*/ aa, { cc as bb } from 'aa';`;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
+
+    test('parse comment in every line end  correctly', () => {
+        const p = `
+import {
+    aa, //aaaaa
+    cc as bb, //bbbbb
+} from 'aa'; //ccccc`;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
+
+    test('parse comment default import correctly', () => {
+        const p = `
+import dd, //dddddd
+{
+    aa, //aaaaa
+    cc as bb, //bbbbb
+} from 'aa'; //ccccc`;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
+
+    test('parse nameSpaceimport import correctly', () => {
+        const p = `
+import dd, //dddddd
+* as bb //eeeeee
+from 'aa'; //ccccc`;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
+
+    test('parse comment between identifier correctly', () => {
+        const p = `
+import {
+    aa, /*aaaaa*/ bb,
+    cc as bb, //bbbbb
+} from 'aa'; //ccccc`;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
+
+    test('parse all kinds of comment correctly', () => {
+        const p = `
+@flow
+
+//i am a comment
+import {
+    aa, /*aaaaa*/ bb, //bbbbbb
+    cc as bb, //ccccc
+} from 'aa'; //ddddd
+//eeeee
+import { aa , cc as bb } from 'dd'; //fffff
+`;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
+});
