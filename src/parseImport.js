@@ -107,7 +107,7 @@ function findTrailingComments(comments, index, nextImp) {
     return trailingComments;
 }
 
-export function mapCommentsToImport(imp, beginIndex, comments = [], first = false, nextImp) {
+function mapCommentsToImport(imp, beginIndex, comments = [], first = false, nextImp) {
     let leadComments = [];
     let trailingComments = [];
     let index;
