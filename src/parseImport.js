@@ -159,22 +159,13 @@ export default function parseImport(originText) {
         .comments;
     const imports = getAllImport(replaceComment(originText, comments), originText);
 
-    const filterCommentImports = imports.filter((imp) => {
-        // filter import in comment, TODO: filter all wapper statement like '/', '"', "`"
-        for (let index = 0; index < comments.length; index += 1) {
-            const comment = comments[index];
-            if (comment.range.start <= imp.range.start && comment.range.end >= imp.range.end) {
-                return false;
-            }
-        }
-        return true;
-    });
+    // TODO: filter all wapper statement like '/', '"', "`", commented import statement has been removed
 
     const pickedImports = [];
     let commentIndex = 0;
-    filterCommentImports.forEach((imp, index) => {
+    imports.forEach((imp, index) => {
         const [res, rIndex] = mapCommentsToImport(
-            imp, commentIndex, comments, index === 0, filterCommentImports[index + 1]);
+            imp, commentIndex, comments, index === 0, imports[index + 1]);
         if (res != null) {
             commentIndex = rIndex;
             pickedImports.push(res);
