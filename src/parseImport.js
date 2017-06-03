@@ -9,7 +9,7 @@ import { trimWordSpacing, getAllLineStart, mapLocToRange, replaceComment } from 
 // TODO: handle there my be sentences between import statement and linecomment begin, low p
 // TODO: handle there my be sentences between one line blockcomemnt and import statement, low p
 
-const importRegex = /(?:import[\s]+)([\s\S]*?)(?:from[\s]+['|"](\w+)['|"](?:\s*;){0,1})/g;
+const importRegex = /(?:import[\s]+)([\s\S]*?)(?:from[\s]+['|"]([A-Za-z0-9_./]+)['|"](?:\s*;){0,1})/g;
 /**
  * return all import statements
  * @param {*string} strippedText text without comments

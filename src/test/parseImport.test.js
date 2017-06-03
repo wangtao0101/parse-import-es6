@@ -347,9 +347,14 @@ describe('parseImport', () => {
         `;
         expect(parseImport(p)).toMatchSnapshot();
     });
+
+    test('parse moduleSpecifier contain . or / correctly', () => {
+        const p = `import { comabc } from './component/com'`; // eslint-disable-line
+        expect(parseImport(p)).toMatchSnapshot();
+    });
 });
 
-describe.only('parseImport middlecomment', () => {
+describe('parseImport middlecomment', () => {
     test('parse single line comment import correctly', () => {
         const p = `
 import {aa,cc\n\n as\n\n bb} from 'aa'; //abcde`;
