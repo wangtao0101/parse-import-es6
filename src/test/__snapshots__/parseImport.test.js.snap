@@ -1597,6 +1597,38 @@ Array [
 ]
 `;
 
+exports[`parseImport parse moduleSpecifier surrounded by " correctly 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": null,
+    "leadComments": Array [],
+    "loc": Object {
+      "end": Object {
+        "column": 40,
+        "line": 0,
+      },
+      "start": Object {
+        "column": 0,
+        "line": 0,
+      },
+    },
+    "middleComments": Array [],
+    "moduleSpecifier": "./component/com",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "comabc",
+    ],
+    "range": Object {
+      "end": 40,
+      "start": 0,
+    },
+    "raw": "import { comabc } from \\"./component/com\\"",
+    "trailingComments": Array [],
+  },
+]
+`;
+
 exports[`parseImport parse multiple import correctly 1`] = `
 Array [
   Object {

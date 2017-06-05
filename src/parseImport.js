@@ -169,7 +169,7 @@ function getAllIdentifierLoc(imp, originText, replaceImpRaw) {
     );
     identifierList.push(
         getIdentifierLoc(imp.moduleSpecifier,
-            `[\\s]+\\'((${imp.moduleSpecifier})\\')`,
+            `[\\s]+[\\'\\"]((${imp.moduleSpecifier})[\\'\\"])`,
             imp, replaceImpRaw, lineStart, 'ModuleSpecifier')
     );
     return identifierList;

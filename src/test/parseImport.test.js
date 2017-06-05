@@ -352,6 +352,11 @@ describe('parseImport', () => {
         const p = `import { comabc } from './component/com'`; // eslint-disable-line
         expect(parseImport(p)).toMatchSnapshot();
     });
+
+    test('parse moduleSpecifier surrounded by " correctly', () => {
+        const p = `import { comabc } from "./component/com"`; // eslint-disable-line
+        expect(parseImport(p)).toMatchSnapshot();
+    });
 });
 
 describe('parseImport middlecomment', () => {
