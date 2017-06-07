@@ -200,6 +200,26 @@ describe('test getAllImport', () => {
             error: 0,
         }]);
     });
+
+    test('support - and _ in moduleSpecifier', () => {
+        const p = "import enUS from 'antd/lib/locale-provider/en_US';";
+        const comments = strip(p, { comment: true, range: true, loc: true, raw: true })
+            .comments;
+        const imports = getAllImport(replaceComment(p, comments), p);
+        expect(imports).toEqual([{
+            importedDefaultBinding: 'enUS',
+            nameSpaceImport: null,
+            namedImports: [],
+            moduleSpecifier: 'antd/lib/locale-provider/en_US',
+            range: {
+                start: 0,
+                end: 50,
+            },
+            loc: makeLoc(0, 0, 0, 50),
+            raw: "import enUS from 'antd/lib/locale-provider/en_US';",
+            error: 0,
+        }]);
+    });
 });
 
 

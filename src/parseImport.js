@@ -9,7 +9,7 @@ import { trimWordSpacing, getAllLineStart, mapLocToRange, replaceComment } from 
 // TODO: handle there my be sentences between import statement and linecomment begin, low p
 // TODO: handle there my be sentences between one line blockcomemnt and import statement, low p
 
-const importRegex = /(?:import[\s]+)([\s\S]*?)(?:from[\s]+['|"]([A-Za-z0-9_./]+)['|"](?:\s*;){0,1})/g;
+const importRegex = /(?:import[\s]+)([\s\S]*?)(?:from[\s]+['|"]([A-Za-z0-9_\-./]+)['|"](?:\s*;){0,1})/g;
 /**
  * return all import statements
  * @param {*string} strippedText text without comments
@@ -289,17 +289,21 @@ export default function parseImport(originText) {
     const pickedImports = [];
     let commentIndex = 0;
     imports.forEach((imp, index) => {
-        const [res, rIndex] = mapCommentsToImport(
-            imp,
-            commentIndex,
-            comments, index === 0,
-            imports[index + 1],
-            originText,
-            replaceText.substring(imp.range.start, imp.range.end)
-        );
-        if (res != null) {
-            commentIndex = rIndex;
-            pickedImports.push(res);
+        if (imp.error === 1) {
+            pickedImports.push(imp);
+        } else {
+            const [res, rIndex] = mapCommentsToImport(
+                imp,
+                commentIndex,
+                comments, index === 0,
+                imports[index + 1],
+                originText,
+                replaceText.substring(imp.range.start, imp.range.end)
+            );
+            if (res != null) {
+                commentIndex = rIndex;
+                pickedImports.push(res);
+            }
         }
     });
     return pickedImports;
