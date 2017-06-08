@@ -9,7 +9,7 @@ import { trimWordSpacing, getAllLineStart, mapLocToRange, replaceComment } from 
 // TODO: handle there my be sentences between import statement and linecomment begin, low p
 // TODO: handle there my be sentences between one line blockcomemnt and import statement, low p
 
-const importRegex = /(?:import[\s]+)([\s\S]*?)(?:from[\s]+['|"]([A-Za-z0-9_\-./]+)['|"](?:\s*;){0,1})/g;
+const importRegex = /(?:import[\s]+)(?:([\s\S]*?)from[\s]+)??['|"]([A-Za-z0-9_\-./]+)['|"](?:\s*;)?/g;
 /**
  * return all import statements
  * @param {*string} strippedText text without comments
@@ -25,18 +25,20 @@ export function getAllImport(replaceText, originText) {
     while ((res = importRegex.exec(replaceText)) != null) { // eslint-disable-line
         let importedDefaultBinding = null;
         let nameSpaceImport = null;
-        let namedImports = null;
+        let namedImports = [];
         let error = 0;
         const moduleSpecifier = res[2];
-        const importClause = trimWordSpacing(res[1]);
 
-        const parseResult = parseImportClause(importClause);
-        if (parseResult != null) {
-            importedDefaultBinding = parseResult.importedDefaultBinding;
-            nameSpaceImport = parseResult.nameSpaceImport;
-            namedImports = parseResult.namedImports;
-        } else {
-            error = 1;
+        if (res[1] != null) {
+            const importClause = trimWordSpacing(res[1]);
+            const parseResult = parseImportClause(importClause);
+            if (parseResult != null) {
+                importedDefaultBinding = parseResult.importedDefaultBinding;
+                nameSpaceImport = parseResult.nameSpaceImport;
+                namedImports = parseResult.namedImports;
+            } else {
+                error = 1;
+            }
         }
 
         importList.push({
