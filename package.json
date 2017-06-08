@@ -1,6 +1,6 @@
 {
   "name": "parse-import-es6",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "parse-import-es6",
   "main": "dist/index.js",
   "repository": {
