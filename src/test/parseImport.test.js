@@ -493,4 +493,9 @@ import { aa , cc as bb } from 'dd'; //fffff
 `;
         expect(parseImport(p)).toMatchSnapshot();
     });
+
+    test('parse import \'module-name\'; correctly', () => {
+        const p = "import \"module-name\";import 'module-name';import a from 'aa';";
+        expect(parseImport(p)).toMatchSnapshot();
+    });
 });

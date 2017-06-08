@@ -164,11 +164,13 @@ function getAllIdentifierLoc(imp, originText, replaceImpRaw) {
             );
         }
     });
-    identifierList.push(
-        getIdentifierLoc('from',
-            '[\\s]+((from)[\\s,]+)',
-            imp, replaceImpRaw, lineStart, 'From')
-    );
+    if (imp.importedDefaultBinding != null || imp.nameSpaceImport != null || imp.namedImports.length !== 0) {
+        identifierList.push(
+            getIdentifierLoc('from',
+                '[\\s]+((from)[\\s,]+)',
+                imp, replaceImpRaw, lineStart, 'From')
+        );
+    }
     identifierList.push(
         getIdentifierLoc(imp.moduleSpecifier,
             `[\\s]+[\\'\\"]((${imp.moduleSpecifier})[\\'\\"])`,
