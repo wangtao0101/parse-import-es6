@@ -1,8 +1,9 @@
 {
   "name": "parse-import-es6",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "parse-import-es6",
   "main": "dist/index.js",
+  "type": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wangtao0101/parse-import-es6.git"

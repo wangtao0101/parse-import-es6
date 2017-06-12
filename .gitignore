@@ -4,5 +4,5 @@ npm-debug.*
 .idea
 .DS_Store
 coverage/
-dist
+dist/*
 !dist/index.d.ts
