@@ -1279,6 +1279,86 @@ Array [
 ]
 `;
 
+exports[`parseImport middlecomment parse import 'module-name'; correctly 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": null,
+    "leadComments": Array [],
+    "loc": Object {
+      "end": Object {
+        "column": 21,
+        "line": 0,
+      },
+      "start": Object {
+        "column": 0,
+        "line": 0,
+      },
+    },
+    "middleComments": Array [],
+    "moduleSpecifier": "module-name",
+    "nameSpaceImport": null,
+    "namedImports": Array [],
+    "range": Object {
+      "end": 21,
+      "start": 0,
+    },
+    "raw": "import \\"module-name\\";",
+    "trailingComments": Array [],
+  },
+  Object {
+    "error": 0,
+    "importedDefaultBinding": null,
+    "leadComments": Array [],
+    "loc": Object {
+      "end": Object {
+        "column": 42,
+        "line": 0,
+      },
+      "start": Object {
+        "column": 21,
+        "line": 0,
+      },
+    },
+    "middleComments": Array [],
+    "moduleSpecifier": "module-name",
+    "nameSpaceImport": null,
+    "namedImports": Array [],
+    "range": Object {
+      "end": 42,
+      "start": 21,
+    },
+    "raw": "import 'module-name';",
+    "trailingComments": Array [],
+  },
+  Object {
+    "error": 0,
+    "importedDefaultBinding": "a",
+    "leadComments": Array [],
+    "loc": Object {
+      "end": Object {
+        "column": 61,
+        "line": 0,
+      },
+      "start": Object {
+        "column": 42,
+        "line": 0,
+      },
+    },
+    "middleComments": Array [],
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": null,
+    "namedImports": Array [],
+    "range": Object {
+      "end": 61,
+      "start": 42,
+    },
+    "raw": "import a from 'aa';",
+    "trailingComments": Array [],
+  },
+]
+`;
+
 exports[`parseImport middlecomment parse nameSpaceimport import correctly 1`] = `
 Array [
   Object {
@@ -1592,6 +1672,38 @@ Array [
       "start": 0,
     },
     "raw": "import { comabc } from './component/com'",
+    "trailingComments": Array [],
+  },
+]
+`;
+
+exports[`parseImport parse moduleSpecifier surrounded by " correctly 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": null,
+    "leadComments": Array [],
+    "loc": Object {
+      "end": Object {
+        "column": 40,
+        "line": 0,
+      },
+      "start": Object {
+        "column": 0,
+        "line": 0,
+      },
+    },
+    "middleComments": Array [],
+    "moduleSpecifier": "./component/com",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "comabc",
+    ],
+    "range": Object {
+      "end": 40,
+      "start": 0,
+    },
+    "raw": "import { comabc } from \\"./component/com\\"",
     "trailingComments": Array [],
   },
 ]

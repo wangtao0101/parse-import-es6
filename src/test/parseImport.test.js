@@ -140,7 +140,7 @@ describe('test getAllImport', () => {
         expect(getAllImport(p)).toEqual([{
             importedDefaultBinding: null,
             nameSpaceImport: null,
-            namedImports: null,
+            namedImports: [],
             moduleSpecifier: 'aa',
             range: {
                 start: 0,
@@ -197,6 +197,70 @@ describe('test getAllImport', () => {
             },
             loc: makeLoc(0, 0, 1, 13),
             raw: "import a /*a\na*/ from 'aa'",
+            error: 0,
+        }]);
+    });
+
+    test('support - and _ in moduleSpecifier', () => {
+        const p = "import enUS from 'antd/lib/locale-provider/en_US';";
+        const comments = strip(p, { comment: true, range: true, loc: true, raw: true })
+            .comments;
+        const imports = getAllImport(replaceComment(p, comments), p);
+        expect(imports).toEqual([{
+            importedDefaultBinding: 'enUS',
+            nameSpaceImport: null,
+            namedImports: [],
+            moduleSpecifier: 'antd/lib/locale-provider/en_US',
+            range: {
+                start: 0,
+                end: 50,
+            },
+            loc: makeLoc(0, 0, 0, 50),
+            raw: "import enUS from 'antd/lib/locale-provider/en_US';",
+            error: 0,
+        }]);
+    });
+
+    test("import \"module-name\";import 'module-name';import a from 'aa';", () => {
+        const p = "import \"module-name\";import 'module-name';import a from 'aa';";
+        const comments = strip(p, { comment: true, range: true, loc: true, raw: true })
+            .comments;
+        const imports = getAllImport(replaceComment(p, comments), p);
+        expect(imports).toEqual([{
+            importedDefaultBinding: null,
+            nameSpaceImport: null,
+            namedImports: [],
+            moduleSpecifier: 'module-name',
+            range: {
+                start: 0,
+                end: 21,
+            },
+            loc: makeLoc(0, 0, 0, 21),
+            raw: 'import "module-name";',
+            error: 0,
+        }, {
+            importedDefaultBinding: null,
+            nameSpaceImport: null,
+            namedImports: [],
+            moduleSpecifier: 'module-name',
+            range: {
+                start: 21,
+                end: 42,
+            },
+            loc: makeLoc(0, 21, 0, 42),
+            raw: "import 'module-name';",
+            error: 0,
+        }, {
+            importedDefaultBinding: 'a',
+            nameSpaceImport: null,
+            namedImports: [],
+            moduleSpecifier: 'aa',
+            range: {
+                start: 42,
+                end: 61,
+            },
+            loc: makeLoc(0, 42, 0, 61),
+            raw: "import a from 'aa';",
             error: 0,
         }]);
     });
@@ -352,6 +416,11 @@ describe('parseImport', () => {
         const p = `import { comabc } from './component/com'`; // eslint-disable-line
         expect(parseImport(p)).toMatchSnapshot();
     });
+
+    test('parse moduleSpecifier surrounded by " correctly', () => {
+        const p = `import { comabc } from "./component/com"`; // eslint-disable-line
+        expect(parseImport(p)).toMatchSnapshot();
+    });
 });
 
 describe('parseImport middlecomment', () => {
@@ -422,6 +491,11 @@ import {
 //eeeee
 import { aa , cc as bb } from 'dd'; //fffff
 `;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
+
+    test('parse import \'module-name\'; correctly', () => {
+        const p = "import \"module-name\";import 'module-name';import a from 'aa';";
         expect(parseImport(p)).toMatchSnapshot();
     });
 });
