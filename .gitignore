@@ -5,3 +5,4 @@ npm-debug.*
 .DS_Store
 coverage/
 dist
+!dist/index.d.ts

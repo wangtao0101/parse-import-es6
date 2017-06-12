@@ -2718,9 +2718,9 @@ p-map@^1.1.1:
   version "1.1.1"
   resolved "http://registry.npm.taobao.org/p-map/download/p-map-1.1.1.tgz#05f5e4ae97a068371bc2a5cc86bfbdbc19c4ae7a"
 
-parse-comment-es6@^0.5.1:
-  version "0.5.1"
-  resolved "http://registry.npm.taobao.org/parse-comment-es6/download/parse-comment-es6-0.5.1.tgz#9b5e897e55bfab3afb2c8639c6b2bbadf084791b"
+parse-comment-es6@^0.5.4:
+  version "0.5.4"
+  resolved "https://registry.npmjs.org/parse-comment-es6/-/parse-comment-es6-0.5.4.tgz#79def8defecdc179c8cd3b109fca9e88ba820948"
 
 parse-glob@^3.0.4:
   version "3.0.4"

@@ -44,6 +44,6 @@
     "rimraf": "^2.6.1"
   },
   "dependencies": {
-    "parse-comment-es6": "^0.5.1"
+    "parse-comment-es6": "^0.5.4"
   }
 }
