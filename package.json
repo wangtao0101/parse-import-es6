@@ -1,6 +1,6 @@
 {
   "name": "parse-import-es6",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "parse-import-es6",
   "main": "dist/index.js",
   "type": "dist/index.d.ts",
@@ -24,7 +24,7 @@
     "buildlib": "cross-env NODE_ENV=production babel src -d dist --ignore src/test",
     "test": "jest",
     "coverage": "jest --coverage",
-    "clean": "rimraf dist/*",
+    "clean": "rimraf dist/*.js",
     "lint": "eslint ./src",
     "prepublish": "npm run clean && npm run buildlib"
   },
