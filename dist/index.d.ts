@@ -49,4 +49,4 @@ export interface ImportDeclaration {
     error: number;
 }
 
-export default function parseImport(text: string): ImportDeclaration;
+export default function parseImport(text: string): Array<ImportDeclaration>;
