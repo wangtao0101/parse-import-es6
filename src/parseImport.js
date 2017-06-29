@@ -110,7 +110,8 @@ function findTrailingComments(comments, index, nextImp) {
 }
 
 function getIdentifierLoc(identifier, regexp, imp, replaceImpRaw, lineStart, type) {
-    const match = new RegExp(regexp).exec(replaceImpRaw);
+    const escapeString = regexp.replace(/\$/, '\\$');
+    const match = new RegExp(escapeString).exec(replaceImpRaw);
     const length = match[0].length - match[1].length;
     const start = match.index + length + imp.range.start;
     const end = start + match[2].length;
