@@ -271,7 +271,9 @@ function mapCommentsToImport(imp, beginIndex, comments = [], first = false, next
         }
     }
 
-    middleComments = mapCommentsToIdentifier(middleComments, imp, originText, replaceImpRaw);
+    if (imp.error === 0) {
+        middleComments = mapCommentsToIdentifier(middleComments, imp, originText, replaceImpRaw);
+    }
     return [
         Object.assign({}, imp, {
             leadComments,
@@ -293,21 +295,17 @@ export default function parseImport(originText) {
     const pickedImports = [];
     let commentIndex = 0;
     imports.forEach((imp, index) => {
-        if (imp.error === 1) {
-            pickedImports.push(imp);
-        } else {
-            const [res, rIndex] = mapCommentsToImport(
-                imp,
-                commentIndex,
-                comments, index === 0,
-                imports[index + 1],
-                originText,
-                replaceText.substring(imp.range.start, imp.range.end)
-            );
-            if (res != null) {
-                commentIndex = rIndex;
-                pickedImports.push(res);
-            }
+        const [res, rIndex] = mapCommentsToImport(
+            imp,
+            commentIndex,
+            comments, index === 0,
+            imports[index + 1],
+            originText,
+            replaceText.substring(imp.range.start, imp.range.end)
+        );
+        if (res != null) {
+            commentIndex = rIndex;
+            pickedImports.push(res);
         }
     });
     return pickedImports;

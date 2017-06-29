@@ -10,15 +10,15 @@ function makeRetrun(importedDefaultBinding, nameSpaceImport, namedImports) {
 
 describe('parseImportClause', () => {
     test('ImportedDefaultBinding', () => {
-        expect(parseImportClause('a')).toEqual(makeRetrun('a', null, []));
+        expect(parseImportClause('a$')).toEqual(makeRetrun('a$', null, []));
     });
 
     test('NameSpaceImport', () => {
-        expect(parseImportClause('* as b')).toEqual(makeRetrun(null, '* as b', []));
+        expect(parseImportClause('* as b$')).toEqual(makeRetrun(null, '* as b$', []));
     });
 
     test('NamedImports', () => {
-        expect(parseImportClause('{a, b, c}')).toEqual(makeRetrun(null, null, ['a', 'b', 'c']));
+        expect(parseImportClause('{a$, $b, c}')).toEqual(makeRetrun(null, null, ['a$', '$b', 'c']));
     });
 
     test('ImportedDefaultBinding, NameSpaceImport', () => {

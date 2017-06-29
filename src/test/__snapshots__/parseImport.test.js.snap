@@ -1574,6 +1574,74 @@ Array [
 ]
 `;
 
+exports[`parseImport parse import with error correctly 1`] = `
+Array [
+  Object {
+    "error": 1,
+    "importedDefaultBinding": null,
+    "leadComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 34,
+            "line": 1,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 1,
+          },
+        },
+        "range": Object {
+          "end": 35,
+          "start": 13,
+        },
+        "raw": "// i am a comment, one",
+        "type": "LineComment",
+      },
+    ],
+    "loc": Object {
+      "end": Object {
+        "column": 49,
+        "line": 2,
+      },
+      "start": Object {
+        "column": 13,
+        "line": 2,
+      },
+    },
+    "middleComments": Array [],
+    "moduleSpecifier": "aa",
+    "nameSpaceImport": null,
+    "namedImports": Array [],
+    "range": Object {
+      "end": 85,
+      "start": 49,
+    },
+    "raw": "import a b, { c as d, f } from 'aa';",
+    "trailingComments": Array [
+      Object {
+        "loc": Object {
+          "end": Object {
+            "column": 34,
+            "line": 3,
+          },
+          "start": Object {
+            "column": 12,
+            "line": 3,
+          },
+        },
+        "range": Object {
+          "end": 121,
+          "start": 99,
+        },
+        "raw": "// i am a comment, two",
+        "type": "LineComment",
+      },
+    ],
+  },
+]
+`;
+
 exports[`parseImport parse leading comment in the same line correctly 1`] = `
 Array [
   Object {

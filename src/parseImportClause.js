@@ -13,8 +13,8 @@ function splitImportsList(text) {
     return list;
 }
 
-const idb = '(\\w+)';
-const nsi = '(\\*\\sas\\s\\w+)';
+const idb = '([\\w\\$]+)';
+const nsi = '(\\*\\sas\\s[\\w\\$]+)';
 const ni = '\\{(.*)\\}';
 
 /**
