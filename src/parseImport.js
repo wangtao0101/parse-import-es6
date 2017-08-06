@@ -9,7 +9,14 @@ import { trimWordSpacing, getAllLineStart, mapLocToRange, replaceComment } from 
 // TODO: handle there my be sentences between import statement and linecomment begin, low p
 // TODO: handle there my be sentences between one line blockcomemnt and import statement, low p
 
-const importRegex = /(?:import[\s]+)(?:([\s\S]*?)from[\s]+)??['|"]([A-Za-z0-9_\-./]+)['|"](?:\s*;)?/g;
+/**
+ * (?:import[\s]+) match 'import '
+ * ?![\s]import[\s match not contain \simport\s
+ * (?:(?![\s]import[\s])[\s\S]) match any char include \n but forward string not contain \simport\s
+ */
+
+// eslint-disable-next-line
+const importRegex = /(?:import[\s]+)(?:((?:(?![\s]import[\s])[\s\S])*?)from[\s]+)??['|"]([A-Za-z0-9_\-./]*)['|"](?:\s*;)?/g;
 /**
  * return all import statements
  * @param {*string} strippedText text without comments

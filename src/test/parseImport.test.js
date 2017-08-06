@@ -152,6 +152,43 @@ describe('test getAllImport', () => {
         }]);
     });
 
+    test('should skip incomplete import statement', () => {
+        const p = `
+import { storiesOf } from '
+import * as a from 'aa';'
+`;
+        expect(getAllImport(p)).toEqual([{
+            importedDefaultBinding: null,
+            nameSpaceImport: '* as a',
+            namedImports: [],
+            moduleSpecifier: 'aa',
+            range: {
+                start: 29,
+                end: 53,
+            },
+            loc: makeLoc(2, 0, 2, 24),
+            raw: "import * as a from 'aa';",
+            error: 0,
+        }]);
+    });
+
+    test('should get import if the identifier words contains import(test this because of regexp).', () => {
+        const p = "import aimport from 'aa';'";
+        expect(getAllImport(p)).toEqual([{
+            importedDefaultBinding: 'aimport',
+            nameSpaceImport: null,
+            namedImports: [],
+            moduleSpecifier: 'aa',
+            range: {
+                start: 0,
+                end: 25,
+            },
+            loc: makeLoc(0, 0, 0, 25),
+            raw: "import aimport from 'aa';",
+            error: 0,
+        }]);
+    });
+
     test('get multiple import correct', () => {
         const p = "import a, { c as d, f } from 'aa';\r\nimport e, { g } from 'g'";
         expect(getAllImport(p)).toEqual([{
