@@ -332,6 +332,15 @@ describe('parseImport', () => {
         expect(parseImport(p)).toMatchSnapshot();
     });
 
+    test('parse import with $$ correctly', () => {
+        const p = `
+            // i am a comment, one
+            import { $$ } from 'foo';
+            // i am a comment, two
+        `;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
+
     test('close comment will be treated as leading or trailing comment', () => {
         const p = `
             // i am a comment, one
