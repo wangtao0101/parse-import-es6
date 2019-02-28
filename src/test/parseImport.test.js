@@ -562,4 +562,10 @@ import { aa , cc as bb } from 'dd'; //fffff
         const p = "import \"module-name\";import 'module-name';import a from 'aa';";
         expect(parseImport(p)).toMatchSnapshot();
     });
+
+    test.only('parse React,{Component}from  correctly', () => {
+        // eslint-disable-next-line
+        const p = `import React,{Component}from 'react';`;
+        expect(parseImport(p)).toMatchSnapshot();
+    });
 });

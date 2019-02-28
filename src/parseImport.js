@@ -173,9 +173,12 @@ function getAllIdentifierLoc(imp, originText, replaceImpRaw) {
         }
     });
     if (imp.importedDefaultBinding != null || imp.nameSpaceImport != null || imp.namedImports.length !== 0) {
+        /**
+         *  Special： import {Component}from 'react'
+         */
         identifierList.push(
             getIdentifierLoc('from',
-                '[\\s]+((from)[\\s,]+)',
+                '[\\s}]+((from)[\\s,]+)',
                 imp, replaceImpRaw, lineStart, 'From')
         );
     }

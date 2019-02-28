@@ -377,6 +377,38 @@ Array [
 ]
 `;
 
+exports[`parseImport middlecomment parse React,{Component}from  correctly 1`] = `
+Array [
+  Object {
+    "error": 0,
+    "importedDefaultBinding": "React",
+    "leadComments": Array [],
+    "loc": Object {
+      "end": Object {
+        "column": 37,
+        "line": 0,
+      },
+      "start": Object {
+        "column": 0,
+        "line": 0,
+      },
+    },
+    "middleComments": Array [],
+    "moduleSpecifier": "react",
+    "nameSpaceImport": null,
+    "namedImports": Array [
+      "Component",
+    ],
+    "range": Object {
+      "end": 37,
+      "start": 0,
+    },
+    "raw": "import React,{Component}from 'react';",
+    "trailingComments": Array [],
+  },
+]
+`;
+
 exports[`parseImport middlecomment parse all kinds of comment correctly 1`] = `
 Array [
   Object {
